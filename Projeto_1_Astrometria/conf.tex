@@ -1,0 +1,70 @@
+%%%%%%%%%% Arquivo de configuração do projeto
+%% Insira seus dados e modifique o modelo com suas preferências
+%% Comente/descomente linhas para modificar o modelo
+%% Aviso! O modelo não segue uma norma específica
+
+%%%%%%%%%%%%%% Informações dos projeto
+\tipo{Relatório Final IC - Bolsa PIBIC}
+\titulo{Investigando o Efeito Sintético em Modelos Espectrais de Populações Estelares}
+\aluno{André Almeida Trovello}
+\emailaluno{andretrovello@usp.br}
+\orientador{Paula R. T. Coelho}
+\emailorientador{pcoelho@usp.br}
+\palavraschave{Projeto, Mestrado, Galáxias disco, Populações Estelares}
+\data{\today}
+
+%%%%%%%%%%%%%% Pacotes extras
+\usepackage{lipsum} % Gera texto dummy
+%\usepackage{fullpage} % Uniformiza as margens (1,5 cm) 
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+%%%%%%%%%%%%%% Bibliografia
+%% Para referências estilo ABNT tire o comentário de uma das linhas 
+%% Manual do pacote de referências: https://www.abntex.net.br/
+
+%\usepackage[num]{abntex2cite}	% Referências numéricas padrão ABNT
+%\usepackage[alf]{abntex2cite}  % Referências alfabéticas padrão ABNT
+
+\AtEndDocument{
+    \bibliografia{bibtex.bib} % Arquivo com o bibtex
+    \estilobibliografico{apalike} % Estilo das referências se não usar ABNT
+%% Mais estilos: https://www.overleaf.com/learn/latex/bibtex_bibliography_styles
+}
+
+%% Para adicionar backrefs tire o comentário da linha abaixo,
+%% backrefs listam as paginas em que uma referência foi citada
+%\usepackage[brazilian,hyperpageref]{backref} % Adiciona backrefs
+
+%%%%%%%%%%%%%% Confs
+\AtBeginDocument{
+    \maketitle % Gera cabeçalho
+    \pagestyle{plain} % Efetivamente, insere a numeração
+}
+
+%%%%%%%%%%%%%%%% Comandos úteis para matemática
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\trans}{^\intercal}
+\newcommand{\pc}[1]{\texttt{\textcolor{magenta}{[#1]}}}
+
+\DeclareMathOperator{\posto}{posto}
+\DeclareMathOperator{\capacidade}{cap}
+\DeclareMathOperator{\valor}{val}
+\DeclareMathOperator{\mdc}{mdc}
+\DeclareMathOperator{\adj}{adj}
+\DeclareMathOperator{\conv}{conv}
+\DeclareMathOperator{\cone}{cone}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newtheorem{teorema}{Teorema}
+\newtheorem{definicao}{Definição}
+\newtheorem{lema}{Lema}
+\newtheorem{proposicao}{Proposição}
+\newtheorem{corolario}{Corolário}
+\newtheorem{fato}{Fato}
+\theoremstyle{definition}
