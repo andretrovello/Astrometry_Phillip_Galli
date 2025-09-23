@@ -2,14 +2,14 @@
 ["bibtex main"] 0 "main.aux" "main.bbl" "main" 0 -1
   "./bibtex.bib" 1758669690 2129 6a75e202085a8a26749048cdbc3e6a01 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/base/apalike.bst" 1292289607 24635 604dafcc79f521a11ea73e506e1fbd98 ""
-  "main.aux" 1758659056.45044 7596 ca4a30858e058671f752aeaadc6435e7 "pdflatex"
+  "main.aux" 1758661143.29024 7596 ca4a30858e058671f752aeaadc6435e7 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1758659055.48566 "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" "main.pdf" "main" 1758659057.10178 2
+["pdflatex"] 1758661142.1049 "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" "main.pdf" "main" 1758661143.72654 2
   "/etc/texmf/web2c/texmf.cnf" 1742823131.03839 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" 1758659056.74244 21480 488b631fd8071510fb1d96ee6c2aeae2 ""
+  "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" 1758661141.7174 21480 488b631fd8071510fb1d96ee6c2aeae2 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -175,13 +175,13 @@
   "aas_macros.sty" 1758669690 5889 50b63fae94b917a77387f6b46c8fd857 ""
   "boxplot.png" 0 -1 0 ""
   "boxplot_artigo.png" 0 -1 0 ""
-  "conf.tex" 1758669690 2441 c3ca99db98d42eb846d5b52a4c474555 ""
-  "main.aux" 1758659056.45044 7596 ca4a30858e058671f752aeaadc6435e7 "pdflatex"
-  "main.bbl" 1758659051.24339 0 d41d8cd98f00b204e9800998ecf8427e "bibtex main"
-  "main.tex" 1758659056.74244 21480 488b631fd8071510fb1d96ee6c2aeae2 ""
+  "conf.tex" 1758661042.65245 2409 7cb2155c0be7e3ed6e23bbe19c71b041 ""
+  "main.aux" 1758661143.29024 7596 ca4a30858e058671f752aeaadc6435e7 "pdflatex"
+  "main.bbl" 1758660215.08499 0 d41d8cd98f00b204e9800998ecf8427e "bibtex main"
+  "main.tex" 1758661141.7174 21480 488b631fd8071510fb1d96ee6c2aeae2 ""
   "milex x syncomil sed.png" 0 -1 0 ""
   "milex x syncomil sed_artigo.png" 0 -1 0 ""
-  "projeto.cls" 1758669690 5924 68707274694875fc26f9ae37bf196ae1 ""
+  "projeto.cls" 1758660366.40136 5858 2725c86f08ce71a213f1e738a7c64d7d ""
   "scaled density.png" 0 -1 0 ""
   "scaled density_artigo.png" 0 -1 0 ""
   (generated)

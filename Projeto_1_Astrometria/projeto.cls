@@ -170,7 +170,6 @@
     {\LARGE\textbf{\@tipo}}\\\vspace{0.314cm}
     {\LARGE\@titulo}\\\vspace{0.314cm}
     {\large\@aluno}\footnote{\@emailaluno}\\
-    {\large{Advisor: \@orientador}}\footnote{\@emailorientador}\\
     {\large\@data}
 }
 
