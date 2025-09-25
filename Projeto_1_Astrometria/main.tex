@@ -1,8 +1,13 @@
 \documentclass[12pt]{projeto}
+\makeatletter
+\DeclareRobustCommand{\rm}{\@font@warning{Using old font command \string\rm}\normalfont}
+\makeatother
 % Insira suas informações no arquivo conf.tex
-\usepackage{natbib}
+%\usepackage{natbib}
+\usepackage[alf]{abntex2cite}
 \usepackage{aas_macros} 
 %\usepackage{fontspec}
+
 \input{conf} % Arquivo de configuração
 
 \begin{document}
@@ -13,6 +18,12 @@ Modelos de síntese de população estelar nos possibilitam estudar e obter as p
 
 
 \section{Introdução}
+
+A determinação de distâncias é uma questão relevante na astronomia contemporânea. Em especial, a determinação de distâncias de aglomerados estelares se mostra primordial para refinar modelos de formação e evolução estelar, visto que o cálculo dessa grandeza possibilita a conversão de valores aparentes de magnitudes em absolutos, o que possibilita a obtenção acurada de parâmetros como idade e massa das estrelas que compõem o aglomerado.
+
+Tradicionalmente, a distância destes aglomerados é calculada pela inversão das paralaxes observadas em seus membros, porém, este método se mostra altamente sujeito a erros aleatórios quando são estudados aglomerados mais distantes, já que nestas ocasiões o erro da paralaxe pode apresentar mesma ordem de grandeza que a própria paralaxe em si.
+
+No contexto deste problema, a missão espacial Gaia contribuiu significativamente, fornecendo paralaxes de alta precisão de aglomerados e estrelas. Como toda medida experimental, os dados da Gaia possuem um erro associado, sendo este uma combinação de três fatores principais: erros aleatórios (a incerteza estatística individual de cada fonte), erros sistemáticos (oriundos de fatores como posição, cor e magnitude da estrela, que afetam estrelas próximas no céu de maneira semelhante) e o zero point (um offset de medição sistemático associado ao próprio instrumento Gaia).
 
 Uma população estelar simples (SSP) é um grupo de estrelas que surgiu a partir da mesma nuvem de gás, possuindo  assim as mesmas idades e metalicidades. Apesar de serem apenas modelos teóricos, visto que já foi constatado o fato de aglomerados e galáxias não serem compostos por apenas um grupo estelar de propriedades iguais, as SSPs ainda são muito úteis para entendê-los, já que estes corpos podem ser descritos como um conjunto de várias delas. 
 
@@ -57,28 +68,17 @@ Abertos os arquivos no Python, iniciou-se o procedimento de limpeza dos dados. F
 \subsection{Reprodução de Resultados Prévios da Literatura}
 A última tarefa deste primeiro semestre foi a reprodução de resultados prévios apresentados na literatura. Dado que o processo de análise e comparação das bibliotecas é o mesmo em todos os casos, para poder avaliar a qualidade de novos modelos de população estelar foi necessário primeiramente verificar se os algoritmos utilizados no Python reproduziam os mesmos resultados obtidos na literatura. Se isso fosse confirmado, era possível inferir então que os códigos utilizados estavam corretos, podendo assim serem aplicados em modelos mais recentes.
 
-Dessa forma, iniciou-se então um procedimento de reproduzir as figuras do trabalho publicado por minha orientadora em \citet{Paula2020}, dando ênfase naquelas que evidenciavam o efeito sintético, objeto de estudo deste projeto. Desta maneira, a primeira tentativa de reprodução foi a da figura 8 do artigo, apresentada na figura \ref{fig:sed_miles_syncomil_artigo} deste projeto. Estes plots demonstram uma comparação direta entre os índices espectrais dos modelos SSP calculados com as bibliotecas MILES  e SynCoMiL, sendo possível observar por meio de uma linha 1-1, ou seja, uma reta \(f(x) = x\), se estes resultados são equivalentes ou não.
+Dessa forma, iniciou-se então um procedimento de reproduzir as figuras do trabalho publicado por minha orientadora em \cite{Paula2020}, dando ênfase naquelas que evidenciavam o efeito sintético, objeto de estudo deste projeto. Desta maneira, a primeira tentativa de reprodução foi a da figura 8 do artigo, apresentada na figura  deste projeto. Estes plots demonstram uma comparação direta entre os índices espectrais dos modelos SSP calculados com as bibliotecas MILES  e SynCoMiL, sendo possível observar por meio de uma linha 1-1, ou seja, uma reta \(f(x) = x\), se estes resultados são equivalentes ou não.
 
 
- \begin{figure}
-\centering
-\includegraphics[width=0.9\textwidth]{milex x syncomil sed_artigo.png}
-\caption{\label{fig:sed_miles_syncomil_artigo} Comparação entre as SEDs obtidas nas bibliotecas MILES (SPS-M) e SynCoMiL (SPS-S) para as idades \(7 \leq \log age \leq 10\), cada plot representando um dos índices espectrais presentes nos modelos. A reta pontilhada representa a linha 1-1. Crédito: \citet{Paula2020}.}
-\end{figure}
 
- \begin{figure}
-\centering
-\includegraphics[width=0.9\textwidth]{milex x syncomil sed.png}
-\caption{\label{fig:sed_miles_syncomil} Reprodução dos resultados obtidos na figura 8 do artigo estudado. Comparação entre as SEDs obtidas nas bibliotecas MILES (SPS-M) e SynCoMiL (SPS-S) para as idades \(7 \leq \log age \leq 10\), cada plot representando um dos índices espectrais presentes nos modelos. A reta pontilhada representa a linha 1-1.}
-\end{figure}
-
-Os resultados reproduzidos por mim estão apresentados na figura \ref{fig:sed_miles_syncomil}.
+Os resultados reproduzidos por mim estão apresentados na figura .
 Analisando as figuras obtidas, nota-se que a reprodução dos resultados do artigo foi atingida com sucesso, visto que, em todos os casos, os plots foram equivalentes. Além disso, é perceptível que na maioria dos índices os pontos se mantiveram sobre a linha 1-1, indicando igualdade entre as duas bibliotecas. 
 
 Entretanto, alguns índices apresentaram divergências consideráveis, sendo eles Ca4227, Fe4668, Mg1, Mg2, Fe5406, Fe5709 e B4000Vn. Nestes casos, houve uma disparidade entre os valores da MILES (SPS-M) e SynCoMiL (SPS-S), onde os pontos acabaram distoando da linha 1-1. Além disso, houveram casos como H83889, H93885 e H103798 onde, apesar de haver equilíbrio sobre a linha 1-1, houve uma dispersão maior dos pontos em torno dela, sendo interessante estudá-los também. 
 
 
-Após a confecção da figura \ref{fig:sed_miles_syncomil}, houveram algumas dificuldades na tentativa de criar as próximas figuras. Primeiramente, tentou-se reproduzir a parte correspondente ao efeito sintético da figura 11 do artigo, visto que esta utilizava do mesmo grupo de dados que as figuras anteriormente mostradas. Neste caso, foi feito um boxplot das diferenças entre os valores dos índices espectrais das bibliotecas MILES e SynCoMiL (\(\Delta idx\)):
+Após a confecção da figura , houveram algumas dificuldades na tentativa de criar as próximas figuras. Primeiramente, tentou-se reproduzir a parte correspondente ao efeito sintético da figura 11 do artigo, visto que esta utilizava do mesmo grupo de dados que as figuras anteriormente mostradas. Neste caso, foi feito um boxplot das diferenças entre os valores dos índices espectrais das bibliotecas MILES e SynCoMiL (\(\Delta idx\)):
 
 \[\Delta idx = I_{SPS-M} - I_{SPS-S}\]
 
@@ -86,47 +86,21 @@ em que I é qualquer índice espectral. Feita esta subtração, foi então aplic
 
 \[z = \frac{x-\mu}{\sigma}\]
 
-onde z é definido pela subtração do valor inicial de \(\Delta idx\) (x) pela média do conjunto (\(\mu\)), sendo este resultado dividido pelo desvio padrão (\(\sigma\)). Os resultados obtidos no artigo estão contidos na figura \ref{fig:boxplot_artigo}.
+onde z é definido pela subtração do valor inicial de \(\Delta idx\) (x) pela média do conjunto (\(\mu\)), sendo este resultado dividido pelo desvio padrão (\(\sigma\)). Os resultados obtidos no artigo estão contidos na figura .
 
-
- \begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{boxplot_artigo.png}
-\caption{\label{fig:boxplot_artigo} Boxplots de \(\Delta idx\) para o efeito sintético. Os resultados foram normalizados para facilitar a comparação. Crédito: \citet{Paula2020}}.
-\end{figure}
-
- \begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{boxplot.png}
-\caption{\label{fig:boxplot} Tentativa de reprodução de boxplots de \(\Delta idx\) para o efeito sintético. Os resultados foram normalizados para facilitar a comparação}
-\end{figure}
-
-O boxplot gerado pelo Python para reproduzir o artigo está contido na figura \ref{fig:boxplot}.
-É perceptível, quando comparados o plot do artigo com aquele feito por mim que houve grande diferença entre eles. Nota-se que, enquanto a figura \ref{fig:boxplot_artigo} apresentou uma crescente nos resultados, indo de valores médios de -2,5 a aproximadamente 0, a média da figura \ref{fig:boxplot} se manteve centrada neste segundo valor, não havendo muita variação em torno desta região. Além disso, os tamanhos das caixas em cada índice não correspondem aos obtidos por minha orientadora e seus colaboradores, demonstrando que não houve compatibilidade entre eles.
+O boxplot gerado pelo Python para reproduzir o artigo está contido na figura .
+É perceptível, quando comparados o plot do artigo com aquele feito por mim que houve grande diferença entre eles. Nota-se que, enquanto a figura  apresentou uma crescente nos resultados, indo de valores médios de -2,5 a aproximadamente 0, a média da figura  se manteve centrada neste segundo valor, não havendo muita variação em torno desta região. Além disso, os tamanhos das caixas em cada índice não correspondem aos obtidos por minha orientadora e seus colaboradores, demonstrando que não houve compatibilidade entre eles.
 
 Antes de discutir o por quê esta divergência pode ter ocorrido, vamos fornecer mais um exemplo.
 
-Outra plot que tentou-se refazer, foi o gráfico de densidade presente na figura 7 do artigo (reproduzido nesse texto na figura \ref{fig:scaled_density_artigo}). Neste caso, foram utlizados os valores de \(\Delta idx\) calculados anteriormente e plotadas suas densidades.
+Outra plot que tentou-se refazer, foi o gráfico de densidade presente na figura 7 do artigo (reproduzido nesse texto na figura ). Neste caso, foram utlizados os valores de \(\Delta idx\) calculados anteriormente e plotadas suas densidades.
 
-
- \begin{figure}[h]
-\centering
-\includegraphics[width=0.9\textwidth]{scaled density_artigo.png}
-\caption{\label{fig:scaled_density_artigo} Gráfico de densidade mostrando a distribuição das diferenças entre os índices espectrais das bibliotecas MILES e SynCoMiL (\(\Delta idx\)) Os diferentes efeitos são representados por cores distintas.}
-\end{figure}
-
- \begin{figure}[h]
-\centering
-\includegraphics[width=0.7\textwidth]{scaled density.png}
-\caption{\label{fig:scaled_density} Tentativa de reprodução do gráfico de densidade mostrando a distribuição das diferenças entre os índices espectrais das bibliotecas MILES e SynCoMiL (\(\Delta idx\)), para o efeito sintético.}
-\end{figure}
-
-Novamente com o objetivo de estudar e enfatizar o efeito sintético, foram plotados os gráficos apenas referentes a ele, apresentados na figura \ref{fig:scaled_density}.
-Avaliando as figuras \ref{fig:scaled_density_artigo} e \ref{fig:scaled_density}, percebe-se mais uma vez que não houve correspondência entre os resultados. Quando analisado o eixo x, é notável que, em alguns casos, a largura da distribuição não apresentou o tamanho esperado, como para os índices TiO1 e TiO2, onde, apesar das distribuições apresentarem a mesma forma, no artigo foi obtida uma ordem de grandeza de \(10^{-2}\), enquanto nos meus resultados, esta foi de \(10^1\). Outro fator interessante é o fato de, em alguns casos, o formato da distribuição divergir, como no caso do índice Fe5015, em que os picos do artigo e deste projeto aparentam estar invertidos. 
+Novamente com o objetivo de estudar e enfatizar o efeito sintético, foram plotados os gráficos apenas referentes a ele, apresentados na figura .
+Avaliando as figuras e , percebe-se mais uma vez que não houve correspondência entre os resultados. Quando analisado o eixo x, é notável que, em alguns casos, a largura da distribuição não apresentou o tamanho esperado, como para os índices TiO1 e TiO2, onde, apesar das distribuições apresentarem a mesma forma, no artigo foi obtida uma ordem de grandeza de \(10^{-2}\), enquanto nos meus resultados, esta foi de \(10^1\). Outro fator interessante é o fato de, em alguns casos, o formato da distribuição divergir, como no caso do índice Fe5015, em que os picos do artigo e deste projeto aparentam estar invertidos. 
 
 Muitas foram as tentativas para avaliar e identifcar o motivo dos resultados estarem se diferenciando tanto. A princípio, foi levantada a hipótese de eu estar manuseando de maneira errada os arquivos FITS, sendo então estes substituídos pelo formato txt. Entretanto, após a troca, a diferença persistiu.
 
-Após isso, o foco foi mudado não para o formato do arquivo e como utilizá-lo, mas sim para as operações matemáticas que estavam envolvidas, já que, em todos os casos problemáticos, houve algo em comum: a subtração dos valores dos índices (\(\Delta idx\)). Assim, foi inicialmente debatido que pode ter ocorrido uma falta de correspondência nos valores subtraídos, ou seja, \(\Delta idx\) estava sendo calculado realizando a diferença de valores espectrais com idades diferentes. Dessa forma, foi então realizada uma correlação cruzada entre as tabelas MILES e SynCoMiL considerando os fatores log age e metalicidade (Z) como determinantes. Apesar de resultar em um formato mais parecido com o esperado nas densidades (figura \ref{fig:scaled_density}), ainda assim algumas diferenças persistiram.
+Após isso, o foco foi mudado não para o formato do arquivo e como utilizá-lo, mas sim para as operações matemáticas que estavam envolvidas, já que, em todos os casos problemáticos, houve algo em comum: a subtração dos valores dos índices (\(\Delta idx\)). Assim, foi inicialmente debatido que pode ter ocorrido uma falta de correspondência nos valores subtraídos, ou seja, \(\Delta idx\) estava sendo calculado realizando a diferença de valores espectrais com idades diferentes. Dessa forma, foi então realizada uma correlação cruzada entre as tabelas MILES e SynCoMiL considerando os fatores log age e metalicidade (Z) como determinantes. Apesar de resultar em um formato mais parecido com o esperado nas densidades (figura), ainda assim algumas diferenças persistiram.
 
 Foi cogitado, por fim, que a utilização de linguagens de programação distintas pode ter causado erro nos resultados finais. Originalmente, os plots e a análise do artigo foram todos feitos em R, enquanto neste projeto foi usado o Python. Obviamente, isto não deveria afetar os plots, já que ambas são linguagens muito robustas e muito competentes no tratamento de dados. Entretanto, visto que cada uma delas possui bibliotecas diferentes, estas possuem nuances em suas funções embutidas que podem ter feito com que as operações matemáticas fossem feitas de formas distintas, resultando assim nestes resultados incompatíveis.
 
@@ -147,4 +121,14 @@ Já quando foi feito o cálculo de diferenças de índices normalizados, não ho
 
 Devido à conclusão da minha graduação, infelizmente não será possível permanecer investigando o que causou estes erros, porém, seguirei minha vida acadêmica no mestrado em Astronomia no IAG-USP, onde estudarei a morfologia de galáxias disco, por meio do código Capivara. Como utilizarei de análise de dados e da linguagem R novamente, todo o conhecimento astronômico e técnico que aprendi ao longo dessa IC me serão muito úteis nesta nova etapa. 
 
+% No seu arquivo main.tex:
+% ... SEU DOCUMENTO TERMINA AQUI ...
+
+
+\bibliography{bibtex} % Apenas o comando para carregar os dados
+\begin{thebibliography}{99}
+\end{thebibliography}
+
 \end{document}
+
+

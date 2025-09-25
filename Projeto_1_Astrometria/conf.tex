@@ -18,6 +18,8 @@
 \usepackage{xcolor}
 \usepackage{geometry}
 \geometry{margin=1in}
+\usepackage{etoolbox}
+\usepackage{fixltx2e} % Pacote para compatibilidade com comandos antigos
 
 %%%%%%%%%%%%%% Bibliografia
 %% Para referências estilo ABNT tire o comentário de uma das linhas 
@@ -26,11 +28,7 @@
 %\usepackage[num]{abntex2cite}	% Referências numéricas padrão ABNT
 %\usepackage[alf]{abntex2cite}  % Referências alfabéticas padrão ABNT
 
-\AtEndDocument{
-    \bibliografia{bibtex.bib} % Arquivo com o bibtex
-    \estilobibliografico{apalike} % Estilo das referências se não usar ABNT
-%% Mais estilos: https://www.overleaf.com/learn/latex/bibtex_bibliography_styles
-}
+
 
 %% Para adicionar backrefs tire o comentário da linha abaixo,
 %% backrefs listam as paginas em que uma referência foi citada
