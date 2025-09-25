@@ -5,4 +5,76 @@
 \providecommand{\abntbstabout}[1]{}
 \abntbstabout{v-1.9.7 }
 
+\bibitem[Cantat-Gaudin et al. 2020]{cantat-gaudin_painting_2020}
+\abntrefinfo{Cantat-Gaudin et al.}{CANTAT-GAUDIN et al.}{2020}
+{CANTAT-GAUDIN, T. et al. Painting a portrait of the {Galactic} disc with its stellar clusters.
+\emph{Astronomy and Astrophysics}, v.~640, p.~A1, ago. 2020.
+ISSN 0004-6361.
+ADS Bibcode: 2020A\&A...640A...1C.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2020A&A...640A...1C}.}
+
+\bibitem[Dias et al. 2002]{dias_new_2002}
+\abntrefinfo{Dias et al.}{DIAS et al.}{2002}
+{DIAS, W.~S. et al. New catalogue of optically visible open clusters and candidates.
+\emph{Astronomy and Astrophysics}, v.~389, p. 871--873, jul. 2002.
+ISSN 0004-6361.
+ADS Bibcode: 2002A\&A...389..871D.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2002A&A...389..871D}.}
+
+\bibitem[Dias et al. 2021]{dias_updated_2021}
+\abntrefinfo{Dias et al.}{DIAS et al.}{2021}
+{DIAS, W.~S. et al. Updated parameters of 1743 open clusters based on {Gaia} {DR2}.
+\emph{Monthly Notices of the Royal Astronomical Society}, v.~504, p. 356--371, jun. 2021.
+ISSN 0035-8711.
+ADS Bibcode: 2021MNRAS.504..356D.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2021MNRAS.504..356D}.}
+
+\bibitem[{ESA} 1997]{esa_hipparcos_1997}
+\abntrefinfo{{ESA}}{{ESA}}{1997}
+{{ESA}. The {HIPPARCOS} and {TYCHO} catalogues. {Astrometric} and photometric star catalogues derived from the {ESA} {HIPPARCOS} {Space} {Astrometry} {Mission}.
+\emph{ESA Special Publication}, v.~1200, jan. 1997.
+ISSN 1609-042X.
+ADS Bibcode: 1997ESASP1200.....E.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/1997ESASP1200.....E}.}
+
+\bibitem[{Gaia Collaboration} et al. 2018]{gaia_collaboration_gaia_2018}
+\abntrefinfo{{Gaia Collaboration} et al.}{{Gaia Collaboration} et al.}{2018}
+{{Gaia Collaboration} et al. Gaia {Data} {Release} 2. {Summary} of the contents and survey properties.
+\emph{Astronomy and Astrophysics}, v.~616, p.~A1, ago. 2018.
+ISSN 0004-6361.
+ADS Bibcode: 2018A\&A...616A...1G.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2018A&A...616A...1G}.}
+
+\bibitem[{Gaia Collaboration} et al. 2016]{gaia_collaboration_gaia_2016}
+\abntrefinfo{{Gaia Collaboration} et al.}{{Gaia Collaboration} et al.}{2016}
+{{Gaia Collaboration} et al. The {Gaia} mission.
+\emph{Astronomy and Astrophysics}, v.~595, p.~A1, nov. 2016.
+ISSN 0004-6361.
+ADS Bibcode: 2016A\&A...595A...1G.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2016A&A...595A...1G}.}
+
+\bibitem[Hunt e Reffert 2024]{hunt_improving_2024}
+\abntrefinfo{Hunt e Reffert}{HUNT; REFFERT}{2024}
+{HUNT, E.~L.; REFFERT, S. Improving the open cluster census. {III}. {Using} cluster masses, radii, and dynamics to create a cleaned open cluster catalogue.
+\emph{Astronomy and Astrophysics}, v.~686, p.~A42, jun. 2024.
+ISSN 0004-6361.
+Publisher: EDP ADS Bibcode: 2024A\&A...686A..42H.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2024A&A...686A..42H}.}
+
+\bibitem[Olivares et al. 2020]{olivares_kalkayotl_2020}
+\abntrefinfo{Olivares et al.}{OLIVARES et al.}{2020}
+{OLIVARES, J. et al. Kalkayotl: {A} cluster distance inference code.
+\emph{A\&A}, v.~644, p.~A7, dez. 2020.
+ISSN 0004-6361, 1432-0746.
+ArXiv:2010.00272 [astro-ph].
+Dispon{\'\i}vel em: \url{http://arxiv.org/abs/2010.00272}.}
+
+\bibitem[Vallenari et al. 2023]{vallenari_gaia_2023}
+\abntrefinfo{Vallenari et al.}{VALLENARI et al.}{2023}
+{VALLENARI, A. et al. Gaia {Data} {Release} 3 - {Summary} of the content and survey properties.
+\emph{A\&A}, v.~674, p.~A1, jun. 2023.
+ISSN 0004-6361, 1432-0746.
+Publisher: EDP Sciences.
+Dispon{\'\i}vel em: \url{https://www.aanda.org/articles/aa/abs/2023/06/aa43940-22/aa43940-22.html}.}
+
 \end{thebibliography}

@@ -2,6 +2,7 @@
 \makeatletter
 \DeclareRobustCommand{\rm}{\@font@warning{Using old font command \string\rm}\normalfont}
 \makeatother
+\graphicspath{{figures/}}
 % Insira suas informações no arquivo conf.tex
 %\usepackage{natbib}
 \usepackage[alf]{abntex2cite}
@@ -19,11 +20,37 @@ Modelos de síntese de população estelar nos possibilitam estudar e obter as p
 
 \section{Introdução}
 
-A determinação de distâncias é uma questão relevante na astronomia contemporânea. Em especial, a determinação de distâncias de aglomerados estelares se mostra primordial para refinar modelos de formação e evolução estelar, visto que o cálculo dessa grandeza possibilita a conversão de valores aparentes de magnitudes em absolutos, o que possibilita a obtenção acurada de parâmetros como idade e massa das estrelas que compõem o aglomerado.
+A determinação de distâncias é uma questão relevante na astronomia contemporânea. Em especial, a determinação de distâncias de aglomerados estelares se mostra primordial para refinar modelos de formação e evolução estelar, visto que o cálculo dessa grandeza possibilita a conversão de valores aparentes de magnitudes em absolutos, viabilizando a obtenção acurada de parâmetros como idade e massa das estrelas que compõem o aglomerado.
 
 Tradicionalmente, a distância destes aglomerados é calculada pela inversão das paralaxes observadas em seus membros, porém, este método se mostra altamente sujeito a erros aleatórios quando são estudados aglomerados mais distantes, já que nestas ocasiões o erro da paralaxe pode apresentar mesma ordem de grandeza que a própria paralaxe em si.
 
-No contexto deste problema, a missão espacial Gaia contribuiu significativamente, fornecendo paralaxes de alta precisão de aglomerados e estrelas. Como toda medida experimental, os dados da Gaia possuem um erro associado, sendo este uma combinação de três fatores principais: erros aleatórios (a incerteza estatística individual de cada fonte), erros sistemáticos (oriundos de fatores como posição, cor e magnitude da estrela, que afetam estrelas próximas no céu de maneira semelhante) e o zero point (um offset de medição sistemático associado ao próprio instrumento Gaia).
+No contexto deste problema, a missão espacial Gaia \cite{gaia_collaboration_gaia_2016} contribuiu significativamente, fornecendo paralaxes de alta precisão de aglomerados e estrelas. Como toda medida experimental, os dados da Gaia possuem um erro associado, sendo este uma combinação de três fatores principais: erros aleatórios (a incerteza estatística individual de cada fonte), erros sistemáticos (oriundos de fatores como posição, cor e magnitude da estrela, que afetam estrelas próximas no céu de maneira semelhante) e o zero point (um offset de medição sistemático associado ao próprio instrumento Gaia).
+
+Em decorrência da propagação não linear das incertezas da paralaxe, técnicas como a Inferência Bayesiana se mostram como boas alternativas para contornar essa questão, possibilitando calcular a distribuição de probabilidade posterior das distâncias de aglomerados, incorporando a verossimilhança dos dados observados e o conhecimento prévio através dos priors.
+
+Baseado nessa técnica, o código Kalkayotl \cite{olivares_kalkayotl_2020} foi desenvolvido utilizando um framework bayesiano hierárquico para inferir simultaneamente os parâmetros da população e as distâncias individuais das estrelas. Sua abordagem tem a vantagem de tratar as correlações espaciais das paralaxes, provendo estimativas confiáveis de distância e incertezas não subestimadas. 
+
+Este projeto teve como objetivo determinar a distância de um aglomerado aberto por meio do código Kalkayotl 1.0, comparando seus resultados com os publicados na literatura, de forma a visualizar a eficácia do método bayesiano quando confrontado com outras estimativas, e compreender quais priors se adequam melhor ao aglomerado em questão. 
+
+\subsection{Aquisição de Dados e Seleção do Aglomerado}
+
+Os dados de aglomerados foram obtidos a partir do catálogo de Emily L. Hunt \cite{hunt_improving_2024}, que através das medições do Gaia DR3 \cite{vallenari_gaia_2023}, fez um estudo de 6956 aglomerados classificados por trabalhos prévios e verificou a ligação gravitacional de suas estrelas membros, concluindo que apenas 5647 (79\%) deles podem ser considerados abertos, fornecendo também estimativas de distâncias para estes corpos celestes. 
+
+Definido o método e o catálogo analisado, fez-se necessária a determinação de um aglomerado para estudo. Para evitar dificuldades no cálculo da distância, utilizou-se como critério de seleção a proximidade do aglomerado (\(<500\)pc) e a quantidade de estrelas membros (\(>200\)). Dessa forma, foi escolhido o aglomerado NGC 1662, composto por \(384\) estrelas e a (\(404,59 \pm 0,28\)) parsecs de distância, segundo o catálogo de Hunt.
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{NGC_1662.png}
+\caption{\label{fig:Capivara_decomposition} Aglomerado NGC 1662.}
+\end{figure}
+
+\subsection{Revisão da Literatura e Metodologias de Distância}
+
+A estimativa de distância do aglomerado NGC 1662 foi contextualizada e comparada com quatro catálogos notáveis, que ilustram a evolução das metodologias na astrometria galáctica: um catálogo pré-Gaia \cite{dias_new_2002}, dois trabalhos do Gaia DR2 com diferentes abordagens \cite{cantat-gaudin_painting_2020, dias_updated_2021} e um catálogo moderno do Gaia DR3 \cite{hunt_improving_2024}.
+
+Na primeira abordagem, o catálogo DIAS et al., (\citeyear{dias_new_2002})  realizou uma compilação de valores de distância da literatura calculados pelo ajuste da sequência principal fotométrica no Diagrama Cor-Magnitude (CDM) e, no caso de aglomerados próximos, pela inversão da média das paralaxes calculadas pelo satélite Hipparcos \cite{esa_hipparcos_1997}. Para NGC 1662, foi estimada uma distância de \(437\) parsecs, utilizando o método fotométrico. Dado que utilizou de dados de baixa precisão de missões antigas, este método não apresentou incerteza em sua medida.
+
+Com a precisão do Gaia DR2 \cite{gaia_collaboration_gaia_2018}, surgiram métodos mais robustos de determinação de parâmetros, embora com diferentes estratégias para o tratamento de erros. Cantat-Gaudin et al., (\citeyear{cantat-gaudin_painting_2020}) utiliza de um modelo de Inferência Bayesiana Hierárquica para inferir a distribuição de probabilidade das paralaxes dos membros de aglomerados, de onde a distância final é obtida por meio da mediana da distribuição de probabilidade \textit{a posteriori}. Embora tenha sido validado, as incertezas finais deste método não foram forncedias no catálogo, limitando a avaliação de confiabilidade do valor de \(428\) parsecs obtido para NGC 1662.
+
 
 Uma população estelar simples (SSP) é um grupo de estrelas que surgiu a partir da mesma nuvem de gás, possuindo  assim as mesmas idades e metalicidades. Apesar de serem apenas modelos teóricos, visto que já foi constatado o fato de aglomerados e galáxias não serem compostos por apenas um grupo estelar de propriedades iguais, as SSPs ainda são muito úteis para entendê-los, já que estes corpos podem ser descritos como um conjunto de várias delas. 
 
