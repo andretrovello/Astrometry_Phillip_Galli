@@ -7,6 +7,8 @@
 %\usepackage{natbib}
 \usepackage[alf]{abntex2cite}
 \usepackage{aas_macros} 
+\usepackage{array} % Certifique-se de que este pacote está no seu preâmbulo.
+
 %\usepackage{fontspec}
 
 \input{conf} % Arquivo de configuração
@@ -45,14 +47,40 @@ Definido o método e o catálogo analisado, fez-se necessária a determinação 
 
 \subsection{Revisão da Literatura e Metodologias de Distância}
 
-A estimativa de distância do aglomerado NGC 1662 foi contextualizada e comparada com quatro catálogos notáveis, que ilustram a evolução das metodologias na astrometria galáctica: um catálogo pré-Gaia \cite{dias_new_2002}, dois trabalhos do Gaia DR2 com diferentes abordagens \cite{cantat-gaudin_painting_2020, dias_updated_2021} e um catálogo moderno do Gaia DR3 \cite{hunt_improving_2024}.
+A estimativa de distância do aglomerado NGC 1662 foi contextualizada e comparada com quatro catálogos notáveis , que ilustram a evolução das metodologias na astrometria galáctica: um catálogo pré-Gaia \cite{dias_new_2002}, dois trabalhos do Gaia DR2 com diferentes abordagens \cite{cantat-gaudin_painting_2020, dias_updated_2021} e um catálogo moderno do Gaia DR3 \cite{hunt_improving_2024}.
 
 Na primeira abordagem, o catálogo DIAS et al., (\citeyear{dias_new_2002})  realizou uma compilação de valores de distância da literatura calculados pelo ajuste da sequência principal fotométrica no Diagrama Cor-Magnitude (CDM) e, no caso de aglomerados próximos, pela inversão da média das paralaxes calculadas pelo satélite Hipparcos \cite{esa_hipparcos_1997}. Para NGC 1662, foi estimada uma distância de \(437\) parsecs, utilizando o método fotométrico. Dado que utilizou de dados de baixa precisão de missões antigas, este método não apresentou incerteza em sua medida.
 
-Com a precisão do Gaia DR2 \cite{gaia_collaboration_gaia_2018}, surgiram métodos mais robustos de determinação de parâmetros, embora com diferentes estratégias para o tratamento de erros. Cantat-Gaudin et al., (\citeyear{cantat-gaudin_painting_2020}) utiliza de um modelo de Inferência Bayesiana Hierárquica para inferir a distribuição de probabilidade das paralaxes dos membros de aglomerados, de onde a distância final é obtida por meio da mediana da distribuição de probabilidade \textit{a posteriori}. Embora tenha sido validado, as incertezas finais deste método não foram forncedias no catálogo, limitando a avaliação de confiabilidade do valor de \(428\) parsecs obtido para NGC 1662.
+Com a precisão do Gaia DR2 \cite{gaia_collaboration_gaia_2018}, surgiram métodos mais robustos de determinação de parâmetros, embora com diferentes estratégias para o tratamento de erros. CANTAT-GAUDIN et al., (\citeyear{cantat-gaudin_painting_2020}) utiliza de um modelo de Inferência Bayesiana Hierárquica para inferir a distribuição de probabilidade das paralaxes dos membros de aglomerados, de onde a distância final é obtida por meio da mediana da distribuição de probabilidade \textit{a posteriori}. Embora tenha sido validado, as incertezas finais deste método não foram fornecidas no catálogo, limitando a avaliação de confiabilidade do valor de \(428\) parsecs obtido para NGC 1662.
+
+Por sua vez, \cite{dias_updated_2021} realizou o cálculo de distâncias por meio do ajuste de isócronas (\textit{isochrone fitting}) ao CDM, empregando o algoritmo de entropia cruzada para determinar parâmetros como a distância, idade, extinção e metalicidade. O método incluiu a aplicação de priors e utilizou reamostragem Monte-Carlo (\textit{bootstrapping}) para a determinação das incertezas, obtendo assim um valor de (\(410 \pm 3\)) parsecs para NGC 1662.
+
+Com o advento do Gaia DR3, o aumento na precisão astrométrica permitiu a HUNT; REFFERT,.(\citeyear{hunt_improving_2024}) calcular distâncias novamente por ajuste de isócronas ao CDM. Entretanto, o método foi aprimorado com um estudo estatístico que visa o máximo rigor. A identificação de membros do algomerado é feita pelo algoritmo HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise - CAMPELLO; MOULAVI; SAN-
+DER \citeyear{campello_density-based_2013}), e a distância final é o resultado de um processo de inferência probabilística de parâmetros. Por ser um método estatístico avançado e de natureza bayesiana em seus resultados, o catálogo fornece a distância como a mediana (50º percentil) da distribuição de probabilidade, acompanhada dos limites do Intervalo Crível (16º e 84º percentis), resultando em nosso último valor de comparação para NGC 1662 de \(404,60 \pm  0,28\) parsecs. 
 
 
-Uma população estelar simples (SSP) é um grupo de estrelas que surgiu a partir da mesma nuvem de gás, possuindo  assim as mesmas idades e metalicidades. Apesar de serem apenas modelos teóricos, visto que já foi constatado o fato de aglomerados e galáxias não serem compostos por apenas um grupo estelar de propriedades iguais, as SSPs ainda são muito úteis para entendê-los, já que estes corpos podem ser descritos como um conjunto de várias delas. 
+\begin{table}[h]
+    \centering
+    \caption{Comparativo das estimativas de distância para NGC 1662, incluindo o Intervalo Crível (IC) de 68\% ou erro de $\pm1\sigma$ quando disponível.}
+    \label{tab:comparativo_distancias_incerteza}
+    % Redefinindo o ambiente tabular para usar alinhamento vertical 'm'
+    % Adicionamos '\renewcommand{\arraystretch}{1.5}' para um espaço extra uniforme
+    \renewcommand{\arraystretch}{1.3} % Aumenta o espaçamento padrão
+    \begin{tabular}{|>{\centering}m{5cm}|>{\centering\arraybackslash}m{4cm}|}
+        \hline
+        \textbf{Autor (Ano)} & \textbf{Distância ($d$) [pc]} \\
+        \hline
+        Hunt et al. (2024) & $404,60^{+0,28}_{-\text{0,28}}$ \\
+        \hline
+        Dias et al. (2021) &  $410^{+3}_{-\text{3}}$ \\
+        \hline
+        Cantat-Gaudin et al. (2020) & $428$ \\
+        \hline
+        Dias et al. (2002) & $437$ \\
+        \hline
+    \end{tabular}
+    \renewcommand{\arraystretch}{1.0} % Retorna ao padrão
+\end{table}
 
 Dessa forma, modelos de síntese de população estelar (SPS) possuem um valor incalculável para a astronomia. Sua existência nos permite estudar as propriedades de galáxias e aglomerados em que não é possível resolver individualmente as estrelas, nos possibilitando inferir diversas características sobre a evolução deles. \cite{BC03}
 

@@ -1,16 +1,16 @@
 # Fdb version 4
-["bibtex main"] 1758834846.85991 "main.aux" "main.bbl" "main" 1758834883.07721 0
-  "./bibtex.bib" 1758833861.48576 39953 147c7a9178ceff4e501aa0de07888a2b ""
+["bibtex main"] 1758841711.11056 "main.aux" "main.bbl" "main" 1758841816.09153 0
+  "./bibtex.bib" 1758840787.80019 41546 dbfe4a13e5aeb721a360b01b1c47eaa0 ""
   "/usr/share/texlive/texmf-dist/bibtex/bib/abntex2/abntex2-options.bib" 1357081713 5396 4eb260dac60f150ae608d45252853090 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/abntex2/abntex2-alf.bst" 1543183680 60064 0819ac8568f9a482510a46e3a8a6f605 ""
-  "main.aux" 1758834882.57366 7960 f848c98af1b39a7250b9779ad6d9b48c "pdflatex"
+  "main.aux" 1758841815.59999 8791 be8abd56c205462e82e4637a5e891940 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1758834881.61184 "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" "main.pdf" "main" 1758834883.07756 0
+["pdflatex"] 1758841814.63946 "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" "main.pdf" "main" 1758841816.09176 0
   "/etc/texmf/web2c/texmf.cnf" 1742823131.03839 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" 1758834881.38951 24845 da24531bf933814fde7d24e937264966 ""
+  "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" 1758841814.38604 26882 b1e4a9403de7c5de9a88c1ca4ad58372 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -130,10 +130,12 @@
   "/usr/share/texmf/fonts/enc/dvips/lm/lm-mathit.enc" 1202520719 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc" 1202520719 2840 216e6e45ad352e2456e1149f28885bee ""
   "/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc" 1202520719 2327 9d6df24f9c4f7368395224341a95523a ""
+  "/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc" 1254269338 3031 6c4d3515bf7115d8518af1c9ab97ca44 ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm" 1254269338 12088 d750ac78274fa7c9f73ba09914c04f8a ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmr10.tfm" 1254269338 12056 7e13df7fe4cbce21b072ba7c4f4deb6e ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmr12.tfm" 1254269338 12092 7b1546e2d096cfd5dcbd4049b0b1ec2e ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmr17.tfm" 1254269338 12156 ca1ae6a3c8564e89597f1f993fba1608 ""
+  "/usr/share/texmf/fonts/tfm/public/lm/ec-lmr6.tfm" 1254269338 12048 c1068d0f4772be9b0ec447692e1d6d82 ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmr7.tfm" 1254269338 12064 09aa3eeac96bf141d673bb1b0385ce55 ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmr8.tfm" 1254269338 12064 a35db870f0b76c338d749c56dc030ef5 ""
   "/usr/share/texmf/fonts/tfm/public/lm/ec-lmri12.tfm" 1254269338 17144 271aaf9ebb339934b04110dc5211fba4 ""
@@ -155,6 +157,7 @@
   "/usr/share/texmf/fonts/tfm/public/lm/rm-lmr6.tfm" 1254269338 11836 e3b6ce3e601aec94f64a536e7f4224d5 ""
   "/usr/share/texmf/fonts/tfm/public/lm/rm-lmr7.tfm" 1254269338 11852 5a9022f105fd1ee2797df861e79ae9a0 ""
   "/usr/share/texmf/fonts/tfm/public/lm/rm-lmr8.tfm" 1254269338 11864 309fd7f43e4a0ba39f6f7644d76e8edf ""
+  "/usr/share/texmf/fonts/tfm/public/lm/ts1-lmr12.tfm" 1254269338 1596 1d4548788e389ded56d0b01b28377882 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmbx12.pfb" 1255129361 116908 1fca96723793882c2e0160350c192fc8 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmmi12.pfb" 1254269338 30696 2654571912f9cd384da9f7cb8a60c568 ""
   "/usr/share/texmf/fonts/type1/public/lm/lmmi8.pfb" 1254269338 30635 833ec815d446ec453a4913fc26d24cbc ""
@@ -172,15 +175,16 @@
   "/usr/share/texmf/tex/latex/lm/omxlmex.fd" 1616454256 568 a5494d810f2680caf10205cd1226c76c ""
   "/usr/share/texmf/tex/latex/lm/ot1lmr.fd" 1616454256 1882 28c08db1407ebff35a658fd141753d16 ""
   "/usr/share/texmf/tex/latex/lm/t1lmr.fd" 1616454256 1867 996fe743d88a01aca041ed22cc10e1bb ""
+  "/usr/share/texmf/tex/latex/lm/ts1lmr.fd" 1616454256 1914 884882d7ebb0fd65cea93fca77ff6f5a ""
   "/usr/share/texmf/web2c/texmf.cnf" 1707919699 40399 f2c302f7d2af602abb742093540a5834 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1758658662.51023 5472669 54eaf61a88b6b7896ebd0dac973cb29c ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1758658723 8213463 4d962fa09b8d82de5565a5781327f81c ""
   "aas_macros.sty" 1758669690 5889 50b63fae94b917a77387f6b46c8fd857 ""
   "conf.tex" 1758821810.55686 2275 64ff5658b5269641e48a757c40121950 ""
   "figures/NGC_1662.png" 1758822606.96387 47444 016304b228999ccf06cea0432338a476 ""
-  "main.aux" 1758834882.57366 7960 f848c98af1b39a7250b9779ad6d9b48c "pdflatex"
-  "main.bbl" 1758834847.01139 3878 4353723c0d0c732313cb568e06045183 "bibtex main"
-  "main.tex" 1758834881.38951 24845 da24531bf933814fde7d24e937264966 ""
+  "main.aux" 1758841815.59999 8791 be8abd56c205462e82e4637a5e891940 "pdflatex"
+  "main.bbl" 1758841711.26814 4315 3112613a26760eb4378a5823218ad174 "bibtex main"
+  "main.tex" 1758841814.38604 26882 b1e4a9403de7c5de9a88c1ca4ad58372 ""
   "projeto.cls" 1758660366.40136 5858 2725c86f08ce71a213f1e738a7c64d7d ""
   (generated)
   "main.aux"

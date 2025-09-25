@@ -5,6 +5,11 @@
 \providecommand{\abntbstabout}[1]{}
 \abntbstabout{v-1.9.7 }
 
+\bibitem[Campello, Moulavi e Sander 2013]{campello_density-based_2013}
+\abntrefinfo{Campello, Moulavi e Sander}{CAMPELLO; MOULAVI; SANDER}{2013}
+{CAMPELLO, R. J. G.~B.; MOULAVI, D.; SANDER, J. Density-{Based} {Clustering} {Based} on {Hierarchical} {Density} {Estimates}. In:  PEI, J. et al. (Ed.). \emph{Advances in {Knowledge} {Discovery} and {Data} {Mining}}. Berlin, Heidelberg: Springer, 2013. p. 160--172.
+ISBN 978-3-642-37456-2.}
+
 \bibitem[Cantat-Gaudin et al. 2020]{cantat-gaudin_painting_2020}
 \abntrefinfo{Cantat-Gaudin et al.}{CANTAT-GAUDIN et al.}{2020}
 {CANTAT-GAUDIN, T. et al. Painting a portrait of the {Galactic} disc with its stellar clusters.
