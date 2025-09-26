@@ -316,6 +316,10 @@ INPUT /usr/share/texmf/fonts/tfm/public/lm/ts1-lmr12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmbx12.tfm
 INPUT /usr/share/texmf/fonts/tfm/public/lm/ec-lmr6.tfm
 INPUT /usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc
+INPUT ./figures/NGC1662_parallax.png
+INPUT ./figures/NGC1662_parallax.png
+INPUT ./figures/NGC1662_parallax.png
+INPUT ./figures/NGC1662_parallax.png
 INPUT ./main.bbl
 INPUT ./main.bbl
 INPUT main.bbl

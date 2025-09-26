@@ -38,16 +38,16 @@ Este projeto teve como objetivo determinar a distância de um aglomerado aberto 
 
 Os dados de aglomerados foram obtidos a partir do catálogo de Emily L. Hunt \cite{hunt_improving_2024}, que através das medições do Gaia DR3 \cite{vallenari_gaia_2023}, fez um estudo de 6956 aglomerados classificados por trabalhos prévios e verificou a ligação gravitacional de suas estrelas membros, concluindo que apenas 5647 (79\%) deles podem ser considerados abertos, fornecendo também estimativas de distâncias para estes corpos celestes. 
 
-Definido o método e o catálogo analisado, fez-se necessária a determinação de um aglomerado para estudo. Para evitar dificuldades no cálculo da distância, utilizou-se como critério de seleção a proximidade do aglomerado (\(<500\)pc) e a quantidade de estrelas membros (\(>200\)). Dessa forma, foi escolhido o aglomerado NGC 1662, composto por \(384\) estrelas e a (\(404,59 \pm 0,28\)) parsecs de distância, segundo o catálogo de Hunt.
+Definido o método e o catálogo analisado, fez-se necessária a determinação de um aglomerado para estudo. Para evitar dificuldades no cálculo da distância, utilizou-se como critério de seleção a proximidade do aglomerado (\(<500\)pc) e a quantidade de estrelas membros (\(>200\)). Dessa forma, foi escolhido o aglomerado NGC 1662 (Figura \ref{fig:NGC1662}), composto por \(384\) estrelas e a (\(404,59 \pm 0,28\)) parsecs de distância, segundo o catálogo de Hunt.
 \begin{figure}[ht]
 \centering
 \includegraphics[width= 0.8\textwidth]{NGC_1662.png}
-\caption{\label{fig:Capivara_decomposition} Aglomerado NGC 1662.}
+\caption{\label{fig:NGC1662} Aglomerado NGC 1662.}
 \end{figure}
 
 \subsection{Revisão da Literatura e Metodologias de Distância}
 
-A estimativa de distância do aglomerado NGC 1662 foi contextualizada e comparada com quatro catálogos notáveis , que ilustram a evolução das metodologias na astrometria galáctica: um catálogo pré-Gaia \cite{dias_new_2002}, dois trabalhos do Gaia DR2 com diferentes abordagens \cite{cantat-gaudin_painting_2020, dias_updated_2021} e um catálogo moderno do Gaia DR3 \cite{hunt_improving_2024}.
+A estimativa de distância do aglomerado NGC 1662 foi contextualizada e comparada com quatro catálogos notáveis (Tabela \ref{tab:comparativo_distancias_incerteza}) , que ilustram a evolução das metodologias na astrometria galáctica: um catálogo pré-Gaia \cite{dias_new_2002}, dois trabalhos do Gaia DR2 com diferentes abordagens \cite{cantat-gaudin_painting_2020, dias_updated_2021} e um catálogo moderno do Gaia DR3 \cite{hunt_improving_2024}.
 
 Na primeira abordagem, o catálogo DIAS et al., (\citeyear{dias_new_2002})  realizou uma compilação de valores de distância da literatura calculados pelo ajuste da sequência principal fotométrica no Diagrama Cor-Magnitude (CDM) e, no caso de aglomerados próximos, pela inversão da média das paralaxes calculadas pelo satélite Hipparcos \cite{esa_hipparcos_1997}. Para NGC 1662, foi estimada uma distância de \(437\) parsecs, utilizando o método fotométrico. Dado que utilizou de dados de baixa precisão de missões antigas, este método não apresentou incerteza em sua medida.
 
@@ -56,12 +56,12 @@ Com a precisão do Gaia DR2 \cite{gaia_collaboration_gaia_2018}, surgiram métod
 Por sua vez, \cite{dias_updated_2021} realizou o cálculo de distâncias por meio do ajuste de isócronas (\textit{isochrone fitting}) ao CDM, empregando o algoritmo de entropia cruzada para determinar parâmetros como a distância, idade, extinção e metalicidade. O método incluiu a aplicação de priors e utilizou reamostragem Monte-Carlo (\textit{bootstrapping}) para a determinação das incertezas, obtendo assim um valor de (\(410 \pm 3\)) parsecs para NGC 1662.
 
 Com o advento do Gaia DR3, o aumento na precisão astrométrica permitiu a HUNT; REFFERT,.(\citeyear{hunt_improving_2024}) calcular distâncias novamente por ajuste de isócronas ao CDM. Entretanto, o método foi aprimorado com um estudo estatístico que visa o máximo rigor. A identificação de membros do algomerado é feita pelo algoritmo HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise - CAMPELLO; MOULAVI; SAN-
-DER \citeyear{campello_density-based_2013}), e a distância final é o resultado de um processo de inferência probabilística de parâmetros. Por ser um método estatístico avançado e de natureza bayesiana em seus resultados, o catálogo fornece a distância como a mediana (50º percentil) da distribuição de probabilidade, acompanhada dos limites do Intervalo Crível (16º e 84º percentis), resultando em nosso último valor de comparação para NGC 1662 de \(404,60 \pm  0,28\) parsecs. 
+DER \citeyear{campello_density-based_2013}), e a distância final é o resultado de um processo de inferência probabilística de parâmetros. Por ser um método estatístico avançado e de natureza bayesiana em seus resultados, o catálogo fornece a distância como a mediana (50º percentil) da distribuição de probabilidade, acompanhada dos limites do Intervalo Crível (16º e 84º percentis), resultando em nosso último valor de comparação para NGC 1662 de (\(404,60 \pm  0,28\)) parsecs. 
 
 
-\begin{table}[h]
+\begin{table}[ht]
     \centering
-    \caption{Comparativo das estimativas de distância para NGC 1662, incluindo o Intervalo Crível (IC) de 68\% ou erro de $\pm1\sigma$ quando disponível.}
+    \caption{Comparativo das estimativas de distância para NGC 1662 e suas incertezas (quando calculadas).}
     \label{tab:comparativo_distancias_incerteza}
     % Redefinindo o ambiente tabular para usar alinhamento vertical 'm'
     % Adicionamos '\renewcommand{\arraystretch}{1.5}' para um espaço extra uniforme
@@ -82,15 +82,19 @@ DER \citeyear{campello_density-based_2013}), e a distância final é o resultado
     \renewcommand{\arraystretch}{1.0} % Retorna ao padrão
 \end{table}
 
-Dessa forma, modelos de síntese de população estelar (SPS) possuem um valor incalculável para a astronomia. Sua existência nos permite estudar as propriedades de galáxias e aglomerados em que não é possível resolver individualmente as estrelas, nos possibilitando inferir diversas características sobre a evolução deles. \cite{BC03}
+\subsection{Seleção da Amostra}
 
-Para a confecção destes modelos, são considerados conceitos de evolução estelar (isócronas), função de massa inicial (IMF), e bibliotecas de espectros estelares. Neste último, a SPS pode ser feita a partir de bibliotecas empíricas ou teóricas. \cite{Paula2020}
+O estudo de distância do aglomerado NGC 1662 no Kalkayotl foi feito com duas amostras distintas. A primeira, denominada amostra completa (\(A_{full}\)), incluiu todas as 384 estrelas fornecidas inicialmente pelo catálogo de Hunt. 
 
-Nas bibliotecas empíricas, as estrelas são observadas, enquanto nas teóricas, os espectros são feitos a partir do conhecimento físico que se possui sobre as atmosferas estelares. Em ambos os casos, existem limitações que afetam a confiabilidade do resultado final. No primeiro, questões como a cobertura do diagrama Hertzprung-Russel (HRD), precisão de parâmetros atmosféricos da estrela, e relação sinal-ruído podem acabar comprometendo. Já no segundo, a limitação do nosso conhecimento sobre atmosfera estelar e opacidade atômica são fatores agravantes.
+Entretanto, para descartar a presença de \textit{outliers} que pudessem enviesar o resultado, realizou-se uma segunda seleção (\(A_{cut}\)), onde foram removidas estrelas que estivessem a uma distância de \(2\sigma\) da mediana do conjunto de dados (Figura \ref{fig:selecao_amostral}). Esta filtragem resultou em uma amostra final de 360 estrelas, que foi então utilizada para o cálculo da distância do aglomerado no Kalkayotl.
 
-As diferenças entre os resultados obtidos têm sido alvo de estudo dos astrônomos por muito tempo. \cite{Paula2020} discute essas divergências, verificando o impacto que a escolha da biblioteca tem sobre as previsões de cores e espectros das SSPs, e por consequência, sobre a idade e metalicidade inferidas a partir desses modelos. Em linhas gerais, é concluido que, em grande parte dos casos, uma maior cobertura do HRD pode provocar mais diferenças significativas do que as imprecisões dos espectros sintéticos. Entretanto, no caso de certos índices espectrais (CaHK, Ca4227, Fe4668, Fe5270), o efeito sintético é considerável, indicando a necessidade de uma maior atenção na modelagem das grades teóricas.
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{NGC1662_parallax.png}
+\caption{\label{fig:selecao_amostral} Distribuição dos valores de paralaxe para o aglomerado NGC 1662, bem como a seleção amostral (área verde clara) para \(2\sigma\) (95\%) da mediana (linha pontilhada roxa). Foi escolhida a mediana em detrimento da média (linha vermelha) devido à primeira se aproximar melhor da Estimativa de Densidade de Kernel (KDE, curva verde escura).}
+\end{figure}
 
-Portanto, o objetivo deste projeto foi estudar o efeito sintético causado pela biblioteca teórica num modelo de população estelar e compreender em quais destes índices espectrais este efeito foi mais considerável, possibilitando assim que os modellers pudessem entender as regiões do espectro eletromagnético que precisam ser modeladas com maior atenção, melhorando assim a qualidade do modelo.
+\subsection{Priors}
 
 \section{Desenvolvimentos}
 Neste primeiro semestre de projeto, as atividades se dividiram em três etapas: estudo bibliográfico, manuseamento e limpeza dos dados e reprodução de resultados prévios da literatura.

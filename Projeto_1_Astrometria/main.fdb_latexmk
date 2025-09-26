@@ -1,16 +1,16 @@
 # Fdb version 4
-["bibtex main"] 1758841711.11056 "main.aux" "main.bbl" "main" 1758841816.09153 0
+["bibtex main"] 1758844055.59091 "main.aux" "main.bbl" "main" 1758844057.75405 0
   "./bibtex.bib" 1758840787.80019 41546 dbfe4a13e5aeb721a360b01b1c47eaa0 ""
   "/usr/share/texlive/texmf-dist/bibtex/bib/abntex2/abntex2-options.bib" 1357081713 5396 4eb260dac60f150ae608d45252853090 ""
   "/usr/share/texlive/texmf-dist/bibtex/bst/abntex2/abntex2-alf.bst" 1543183680 60064 0819ac8568f9a482510a46e3a8a6f605 ""
-  "main.aux" 1758841815.59999 8791 be8abd56c205462e82e4637a5e891940 "pdflatex"
+  "main.aux" 1758844057.26051 10163 cf1d0efb30ebbbe661e732d8a383c1c6 "pdflatex"
   (generated)
   "main.bbl"
   "main.blg"
   (rewritten before read)
-["pdflatex"] 1758841814.63946 "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" "main.pdf" "main" 1758841816.09176 0
+["pdflatex"] 1758844055.72824 "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" "main.pdf" "main" 1758844057.75425 0
   "/etc/texmf/web2c/texmf.cnf" 1742823131.03839 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" 1758841814.38604 26882 b1e4a9403de7c5de9a88c1ca4ad58372 ""
+  "/home/andretrovello/Desktop/Astrometry_Phillip_Galli/Projeto_1_Astrometria/main.tex" 1758844053.24944 25788 1f4849121cf8ddf1163b6c42497a1567 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1246382020 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -181,10 +181,11 @@
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1758658723 8213463 4d962fa09b8d82de5565a5781327f81c ""
   "aas_macros.sty" 1758669690 5889 50b63fae94b917a77387f6b46c8fd857 ""
   "conf.tex" 1758821810.55686 2275 64ff5658b5269641e48a757c40121950 ""
+  "figures/NGC1662_parallax.png" 1758742586.95478 194385 13e29cbdc6170db94eceb28f29b79688 ""
   "figures/NGC_1662.png" 1758822606.96387 47444 016304b228999ccf06cea0432338a476 ""
-  "main.aux" 1758841815.59999 8791 be8abd56c205462e82e4637a5e891940 "pdflatex"
-  "main.bbl" 1758841711.26814 4315 3112613a26760eb4378a5823218ad174 "bibtex main"
-  "main.tex" 1758841814.38604 26882 b1e4a9403de7c5de9a88c1ca4ad58372 ""
+  "main.aux" 1758844057.26051 10163 cf1d0efb30ebbbe661e732d8a383c1c6 "pdflatex"
+  "main.bbl" 1758844055.72249 4315 3112613a26760eb4378a5823218ad174 "bibtex main"
+  "main.tex" 1758844053.24944 25788 1f4849121cf8ddf1163b6c42497a1567 ""
   "projeto.cls" 1758660366.40136 5858 2725c86f08ce71a213f1e738a7c64d7d ""
   (generated)
   "main.aux"
