@@ -6,6 +6,9 @@
 % Insira suas informações no arquivo conf.tex
 %\usepackage{natbib}
 \usepackage[alf]{abntex2cite}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[brazil]{babel} % <--- ESSA LINHA É CRUCIAL
 \usepackage{aas_macros} 
 \usepackage{array} % Certifique-se de que este pacote está no seu preâmbulo.
 
@@ -16,7 +19,11 @@
 \begin{document}
 
 \begin{abstract}
-Modelos de síntese de população estelar nos possibilitam estudar e obter as propriedades de galáxias ou aglomerados a partir de seus espectros integrados. Como todo modelo, estes apresentam imprecisões, podendo elas estarem relacionadas à evolução estelar, função de massa inicial ou ao tipo de espectro estelar utilizado. Os modelos podem ser construídos a partir de bibliotecas estelares empíricas ou teóricas, dos quais as limitações estão relacionadas à cobertura do diagrama HR, no primeiro caso, e ao limite de conhecimento físico que possuímos sobre as atmosferas estelares, no segundo. A literatura se refere ao ``efeito sintético'' como sendo as alterações nos modelos de população estelar que ocorrem quando uma biblioteca estelar empírica é trocada por uma teórica. Este projeto possui como objetivo verificar as diferenças entre modelos de população estelar, comparando os modelos baseados na biblioteca estelar empírica MILES com os modelos baseados na biblioteca teórica SynCoMiL. Esperamos estudar os efeitos sintéticos, identificando assim as regiões do espectro que mais divergiram e necessitam ser modeladas com maior atenção. Neste primeiro semestre de iniciação científica foram desenvolvidas as seguintes atividades: estudo bibliográfico, manuseamento e limpeza de dados, e reprodução de resultados prévios da literatura. A primeira englobou todo o estudo astronômico sobre modelos de população estelar e técnico (Python e R). A segunda envolveu o aprimoramento dos meus conhecimentos em tratamento de dados. Já a última ateve-se a reproduzir resultados disponíveis na literatura, como forma de verificar se os algoritmos utilizados em meus códigos estavam corretos e poderiam ser utilizados para avaliar novos modelos. Os resultados obtidos se mostraram parcialmente compatíveis com os apresentados no artigo tomado como base para este projeto. No cálculo de diferenças de índices normalizadas, porém, há uma discrepância cuja origem não foi identificada, havendo a suspeita de que esta ocorreu devido ao diferente funcionamento das bibliotecas do Python e do R. 
+A determinação de distâncias de aglomerados estelares é crucial para calibrar a escala de distância cósmica, exigindo metodologias que lidem com sistemáticas como a correlação espacial das paralaxes do Gaia DR3. Este trabalho teve como objetivo determinar a distância do aglomerado aberto NGC 1662 utilizando a Inferência Bayesiana hierárquica implementada no código Kalkayotl \cite{olivares_kalkayotl_2020}, avaliando o desempenho de diferentes priors em amostras de dados variadas.
+
+A aplicação demonstrou a robustez do Kalkayotl, mas revelou a sensibilidade do Prior Uniforme à presença de outliers, que se mostrou estatisticamente incompatível, dentro de um intervalo de confiança de \(2\sigma\), com a amostra filtrada ($\text{A}_{\text{cut}}$). Em contraste, os priors Gaussiano, EFF e King apresentaram forte estabilidade e compatibilidade entre as amostras, estabelecendo-se como os mais adequados. O prior Gaussiano, especificamente, forneceu a estimativa final de $\mathbf{411,4^{+2,0}_{-\text{2,0}}} \mathbf{pc}$.
+
+A comparação com a literatura mostrou compatibilidade com o catálogo de Dias et al. (\citeyear{dias_updated_2021}), mas uma incompatibilidade estatística significativa com a distância de alta precisão de Hunt et al. (\citeyear{hunt_improving_2024}), que pode estar atrelada a incertezas subestimadas em seu catálogo Conclui-se que o Kalkayotl é uma ferramenta rigorosa que quantifica a sistemática não corrigida, garantindo que suas incertezas não são subestimadas.
 \end{abstract}
 
 
@@ -56,7 +63,7 @@ Com a precisão do Gaia DR2 \cite{gaia_collaboration_gaia_2018}, surgiram métod
 Por sua vez, \cite{dias_updated_2021} realizou o cálculo de distâncias por meio do ajuste de isócronas (\textit{isochrone fitting}) ao CDM, empregando o algoritmo de entropia cruzada para determinar parâmetros como a distância, idade, extinção e metalicidade. O método incluiu a aplicação de priors e utilizou reamostragem Monte-Carlo (\textit{bootstrapping}) para a determinação das incertezas, obtendo assim um valor de (\(410 \pm 3\)) parsecs para NGC 1662.
 
 Com o advento do Gaia DR3, o aumento na precisão astrométrica permitiu a HUNT; REFFERT,.(\citeyear{hunt_improving_2024}) calcular distâncias novamente por ajuste de isócronas ao CDM. Entretanto, o método foi aprimorado com um estudo estatístico que visa o máximo rigor. A identificação de membros do algomerado é feita pelo algoritmo HDBSCAN (Hierarchical Density-Based Spatial Clustering of Applications with Noise - CAMPELLO; MOULAVI; SAN-
-DER \citeyear{campello_density-based_2013}), e a distância final é o resultado de um processo de inferência probabilística de parâmetros. Por ser um método estatístico avançado e de natureza bayesiana em seus resultados, o catálogo fornece a distância como a mediana (50º percentil) da distribuição de probabilidade, acompanhada dos limites do Intervalo Crível (16º e 84º percentis), resultando em nosso último valor de comparação para NGC 1662 de (\(404,60 \pm  0,28\)) parsecs. 
+DER \citeyear{campello_density-based_2013}), e a distância final é o resultado de um processo de inferência probabilística de parâmetros. Por ser um método estatístico avançado e de natureza bayesiana em seus resultados, o catálogo fornece a distância como a mediana (50º percentil) da distribuição de probabilidade, acompanhada dos limites do intervalo de confiança (16º e 84º percentis), resultando em nosso último valor de comparação para NGC 1662 de (\(404,60 \pm  0,28\)) parsecs. 
 
 
 \begin{table}[ht]
@@ -96,97 +103,164 @@ Entretanto, para descartar a presença de \textit{outliers} que pudessem enviesa
 
 \subsection{Priors}
 
-\section{Desenvolvimentos}
-Neste primeiro semestre de projeto, as atividades se dividiram em três etapas: estudo bibliográfico, manuseamento e limpeza dos dados e reprodução de resultados prévios da literatura.
+A determinação do prior (conhecimento prévio sobre o parâmetro de interesse) é fundamental quando são utilizados métodos de Inferência Bayesiana, visto que garante não apenas a acurácia do modelo, como também a estabilidade da Cadeia MCMC (Markov Chain Monte Carlo), que é o algoritmo central do código Kalkayotl.
 
-\subsection{Estudo Bibliográfico}
-Esta primeira etapa teve como finalidade adquirir os conhecimentos necessários para o entendimento, tanto do aspecto astronômico do projeto, quanto do técnico. Dessa forma, inicialmente foi feita a leitura e compreensão de artigos sobre modelos de população estelar \cite{BC03}, bibliotecas teóricas e empíricas, bem como as diferenças entre o efeito sintético e de cobertura \cite{Paula2014} e \cite{Paula2020}. Além disso, sabendo que o último passo do projeto visava utilizar o código Starlight \cite{starlight}, foi feito também um estudo desta ferramenta,
-capaz de, a partir de modelos de síntese de população estelar, destrinchar o percentual de SSPs que compõem uma galáxia observada, além de estimar sua idade, metalicidade e extinção visual.
+A MCMC é uma técnica que permite a obtenção da complexa distribuição de probabilidade posterior dos parâmetros do aglomerado. Ela se baseia na Propriedade de Markov, que estabelece que a probabilidade de a cadeia se mover para o próximo estado depende única e exclusivamente de seu estado atual, e não de sua trajetória anterior. Isso implica que a distribuição de amostragem converge para um estado estacionário, que é a própria distribuição posterior desejada.
 
-Compreendida a astronomia, foi então estudada a questão técnica do projeto, centrada basicamente em programação. Dentre todas as possíveis linguagens para a execução das tarefas necessárias, foram escolhidas Python e R pela sua grande versatilidade em análise de dados, sendo a primeira utilizada de fato, e a segunda servindo como base para comparação visto que a orientadora deste projeto, Prof. Paula R. T. Coelho, possui grande experiência com R, fornecendo assim códigos que pudessem ser estudados para compreender a lógica por trás deles.
+No caso do Kalkayotl, a MCMC utiliza de uma amostragem Hamiltonian Monte Carlo (HMC), que utiliza do gradiente da função de verossimilhança para guiar seus próximos passos. Essa técnica possibilita iterações mais informadas, evitando que a cadeia flutue descontroladamente, garantindo a estabilidade do modelo. 
 
-Assim, no Python, foram estudadas principalmente as bibliotecas \textit{Numpy}, capaz de realizar operações complexas em arrays, \textit{Pandas}, que possibilita o manuseamento de dados, e \textit{Matplotlib}, que permite a visualização deles. Já no R, foi dada muita ênfase à biblioteca \textit{Tidyverse}, robusto pacote de análise de dados capaz de realizar todas as tarefas já citadas anteriormente.
+O código Kalkayotl apresenta dois tipos de priors: estatísticos e astrofísicos.
 
-\subsection{Manuseamento e Limpeza de Dados}
+Priors estatísticos são aqueles baseados apenas em distribuições matemáticas simples para a densidade de estrelas do aglomerado. Estes modelos são mais simples, apresentando poucos parâmetros livres, a distãncia do centro do algomerado (\textit{loc}) e seu tamanho ao longo da linha de visada (\textit{scl}). Os três priors estatísticos presentes no código estão descritos abaixo.
 
-Encerrada a primeira etapa teórica, foi então o momento de iniciar de fato a prática, ou seja, aplicar todos os conhecimentos adquiridos para manusear e limpar os dados dos modelos de população estelar.
+\textbf{Uniforme:} prior mais simples, que atribui a mesma densidade de probabilidade para todos os valores no intervalo \([loc-scl,loc+scl]\)  
 
-Foram acessados três modelos, apresentados em \cite{Paula2020}. O primeiro, nomeado cbc, comporta a biblioteca teórica Coelho 14 (C14), que possui uma extensa cobertura do diagrama Hertzprung-Russel (HRD). Neste caso, os arquivos dividem-se em dois formatos: FITS e gz. 
+\textbf{Gaussian:} assume que a distância é uma distribuição normal com média (\textit{loc}) e desvio padrão (\textit{scl}).
 
-Flexible Image Transport System (FITS) é um formato de arquivo muito utilizado em astronomia, capaz de carregar consigo diferentes tipos de informação em formatos variados, sendo eles unidades de dados (HDUs) formados por vetores 1D, 2D ou 3D multi dimensionais, além de ASCII headers capazes de transportar informações adicionais ou introdutórias, como coordenadas. Com essa alta flexibilidade e capacidade de armazenamento, diferentemente de imagens convencionais, FITS permite guardar quantidades considerávis de dados que facilitam visualização e análise. Para a leitura deste formato de arquivo, foi utilizada a biblioteca astropy, construída com foco em resolver questões astronômicas em Python.
+\textbf{Gaussan Mixture Model:} GMM é um prior descrito como a combinação linear de \textit{k} distribuições Gaussianas, sendo \(k>0\). Para os estudos deste projeto, \(k=2\).
 
-Já gz é um arquivo compactado utilizando o software GNU zip (gzip), muito utilizado no Linux e Windows.
+Por outro lado, priors astrofísicos  são baseados em modelos físicos ou empíricos de estrutura de aglomerados. Apresentam maior complexidade, tendo parâmetros adicionais, além de \textit{loc} e \textit{scl}.
 
-O segundo modelo (SPS-M) comporta a MILES, uma biblioteca empírica que possui o fluxo calibrado de aproximadamente
-1000 estrelas, cobrindo a faixa de 3540-7410Å do espectro eletromagnético. Já o último modelo (SPS-S) utiliza da biblioteca teórica SynCoMiL, que apresenta todas as suas estrelas geradas por modelagem física, porém, foi limitada a apresentar exatamente a mesma cobertura em termos de comprimento de onda e HRD que a MILES. Tanto na SPS-M quanto na SPS-S, os arquivos foram apresentados nos formatos FITS e txt.
+A descrição dos priors astrofísicos presentes no Kalkayotl é feita a seguir.
+
+\textbf{Elson Fall and Freeman:} EFF é um prior que distribui as distâncias da mesma maneira que \cite{elson_structure_1987} distribui a densidade de luminosidade superficial em aglomerados da Grande Nuvem de Magalhães. Além da distância e tamanho do aglomerado, também é adicionado um parâmetro \(\gamma\) que descreve o declive da distribuição em raios grandes.
+
+\textbf{King:} descreve a distribuição de distâncias da mesma forma que \cite{king_structure_1962} descreve a distribuição espacial de aglomerados globulares. Além de \textit{loc} e \textit{scl}, inclui também a máxima extensão do algomerado, por meio do raio de maré (\(r_t\))
+
+\textbf{Exponentially Decreasing Space Density Prior}: introduzido por \cite{bailer-jones_estimating_2015}, o EDSD é um prior galáctico projetado para inferir distâncias a estrelas de campo de toda a Galáxia. Dessa forma, no contexto de um único aglomerado estelar ele não é preciso para inferir distâncias, não sendo portanto utilizado neste projeto. Seu único parâmetro (\textit{scl}) refere-se ao comprimento típico do decaimento exponencial.
+
+\subsection{Definição de Parâmetros}
+
+Para rodar o código Kalkayotl e fazer a análise de inferência, foram definidos alguns parâmetros que garantem a acurácia e a confiabilidade dos resultados, pensando sempre no funcionamento correto da Inferência Bayesiana.
+
+No modelo, reportou-se a \textit{Moda} (\textit{Mode}) da distribuição de probabilidade posterior como a distância central do aglomerado. Essa escolha é estatisticamente mais correta do que usar a média, pois a relação não-linear entre paralaxe e distância cria uma distribuição assimétrica. Com o uso da Moda, garantimos que o valor reportado seja, de fato, a distância mais provável (o  pico da distribuição).
+
+Além disso, \textit{Parametrização Central} foi utilizada no modelo hierárquico. Como o NGC 1662 é um aglomerado próximo ($\sim 400$ pc) e bem populado ($N=384$), o nosso conjunto de dados é altamente restritivo. Neste caso, a parametrização central é a mais eficiente, pois evita as correlações complexas que a parametrização não-central visa resolver em aglomerados mais distantes e com dados mais limitados.
+
+Por fim, definiu-se incerteza dos parâmetros pelo intervalo de confiança de $68\%$, o que equivale a aproximadamente $1\sigma$ em uma distribuição normal, com o objetivo de obter uma boa estimativa de incerteza. Além disso, foi determinado como \(-0,021mas\) o valor de zero point para o Gaia DR3  \cite{groenewegen_parallax_2021}.
+
+Descrito o método, as ferramentas, os dados e o funcionamento do código, seguem, na seção seguinte, os resultados obtidos ao longo deste projeto para o aglomerado aberto NGC 1662.
+
+\section{Resultados e Análise}
+
+Como saída, o Kalkayotl forneceu a densidade de probabilidade das distâncias de estrelas individuais e do aglomerado em si, bem como as iterações das cadeias de Markov em cada caso, retornando resultados como os apresentados na Figura \ref{fig:ex_gaussiano}.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{gaussian_ngc1662.png}
+\caption{\label{fig:ex_gaussiano} Resultados da amostra completa ($A_{full}$) do aglomerado NGC 1662, divididos entre distribuição de probabilidade das distâncias (esquerda) e iterações das cadeias de Markov (direita). A primeira linha apresenta resultados individuais de uma estrela, enquanto as demais referem-se ao aglomerado completo. Prior Gaussiano adotado.}
+\end{figure}
+
+Obtidas as curvas apresentadas acima, foi necessária a avaliação dos resultados para estudar a qualidade do prior quando aplicado ao aglomerado em questão. Esse processo foi feito inicialmente pela análise da convergência da Cadeia MCMC. Na maioria dos priors, tanto para \(A_{full}\) quanto para \(A_{cut}\), a convergência foi estável, sem apresentar qualquer tendência de subida ou descida e com um comportsamento muito semelhante entre as cadeias. Entretanto, foram notadas discrepâncias nos resultados do prior GMM da amostra \(A_{full}\) (Figura \ref{fig:gmm_ngc1662full}), onde as cadeias convergiram para valores distintos e não houve sobreposição das distribuições de probabilidade.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{gmm_ngc1662full.png}
+\caption{\label{fig:gmm_ngc1662full} Resultados dos parâmetros do aglomerado para a amostra \(A_{full}\) para o prior GMM}
+\end{figure}
+
+Essa falha de convergência se dá pela própria definição do prior GMM como sendo uma mistura de distribuições Gaussianas, o que implica que um aglomerado que se adapte bem a este modelo apresenta subestruturas em sua composição ou possui amostra muito bem definida. O resultado do GMM permite, portanto, inferir uma morfologia simples para o NGC 1662, que não possui as subestruturas necessárias para estabilizar um modelo tão complexo.
+
+Entretanto, um fenômeno interessante é observado quando se aplica o mesmo prior para a amostra selecionada \(A_{cut}\) (Figura \ref{fig:gmm_ngc1662cut}). Neste caso, a divergência da MCMC torna-se inexistente e ambas as cadeias se estabilizam em torno dos mesmos valores, havendo também sobreposição das densidades de probabilidade. 
+
+Hipotetizando sobre a possível causa destas observações, concluiu-se que a seleção da amostra promoveu a exclusão de valores considerados ruidosos e de estrelas de cauda, centrando os dados em torno de uma região mais central do aglomerado, forçando a distribuição das paralaxes a ser mais simétrica e próxima de uma Gaussiana pura. Essa remoção dos ruídos facilita que o prior GMM identifique que o aglomerado se encaixe e uma ou duas subestruturas, estabilizando a convergência.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{gmm_ngc1662cut.png}
+\caption{\label{fig:gmm_ngc1662cut} Resultados dos parâmetros do aglomerado para a amostra \(A_{cut}\) para o prior GMM}
+\end{figure}
+
+Outro resultado interessante foi obtido quando avaliado o prior Uniforme (Figura \ref{fig:uniforme_ngc1662}). Apesar de apresentar distribuições de probabilidade com pico estreito e bem definido para o aglomerado, este método também provocou uma distribuição ampla e achatada para as estrelas individuais. Esta discrepância é explicada justamente pelo fato deste ser o prior menos informativo de todos, não impondo uma tendência de agrupamento forte no centro. Isso permite que as estrelas se distribuam igualmente ao longo do aglomerado, apresentando uma incerteza individual grande. Por outro lado, esta distribuição não se repete quando estudado o aglomerado como um todo, pois o conjunto de 384 estrelas proporciona uma verossimilhança forte e os erros aleatórios de cada estrela são anulados, proporcionando uma distribuição de pico bem definido.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{uniforme_ngc1662.png}
+\caption{\label{fig:uniforme_ngc1662} Resultados da amostra \(A_{full}\) para o prior Uniforme}
+\end{figure}
+
+Comparando-se os resultados da amostra \(A_{full}\), nota-se que houve similaridade considerável entre os resultados, de modo que tanto as distribuições de probabilidade (Figura \ref{fig:ngc1662_comparison}) quanto os valores de distâncias calculadas para cada prior foram semelhantes. Com exceção do caso GMM, também aparentou haver semelhança quando equiparadas as amostras \(A_{full}\) e \(A_{cut}\). Para confirmar se os priors destas amostras eram de fato compatíveis, foi realizado um Teste-Z com intervalo de confiança \(2\sigma\), de maneira que verificou-se que apenas o prior Uniforme não foi estatisticamente compatível (Tabela \ref{tab:zscore_estabilidade_final}), evidenciando sua sensibilidade extrema a possíveis outliers.
+
+É importante notar que, embora os Testes-Z calculados assumam a independência entre as amostras, isso é uma simplificação conservadora. Dado que a amostra selecionada é um subconjunto da amostra completa, as distâncias são positivamente correlacionadas. A inclusão do termo de covariância apenas aumentaria o valor de Z para todos os priors, reforçando ainda mais a incompatibilidade estatística do Prior Uniforme, enquanto para os outros esse acréscimo provavelmente não seria tão relevante, devido aos já muito baixos valores de Teste-Z obtidos nestes casos.
+
+\begin{figure}[ht]
+\centering
+\includegraphics[width= 0.8\textwidth]{ngc1662_comparison.png}
+\caption{\label{fig:ngc1662_comparison} Resultados da amostra \(A_{full}\) para os priors EFF, Gaussiano, King e Uniforme.}
+\end{figure}
+
+\begin{table}[h]
+    \centering
+    \caption{Análise de Estabilidade (Teste-Z): Compatibilidade das Distâncias entre as Amostras $A_{\text{full}}$ e $A_{\text{cut}}$ para os 4 diferentes priors analisados.}
+    \label{tab:zscore_estabilidade_final}
+    \renewcommand{\arraystretch}{1.5} % Aumenta o espaçamento vertical para clareza
+    \begin{tabular}{|l|>{\centering}m{2.5cm}|>{\centering}m{2.5cm}|>{\centering}m{1.5cm}|>{\centering\arraybackslash}m{2.5cm}|}
+        \hline
+        \textbf{Prior} & $\mathbf{A_{\text{full}}} [pc]$ & $\mathbf{A_{\text{cut}}}$ [pc] & \textbf{Teste-Z} & \textbf{Compatíveis ($Z < 2$)} \\
+        \hline
+        EFF  & $410,9^{+1,9}_{-\text{1,7}}$ & $410,1^{+2,1}_{-\text{2,05}}$ & $0,28$ & Sim \\
+        \hline
+        Gaussiano & $414,1^{+2,1}_{-\text{2,0}}$ & $411,4^{+2,0}_{-\text{2,0}}$ & $0,95$ & Sim \\
+        \hline
+        King & $410,9^{+2,0}_{-\text{2,2}}$ & $409,9^{+2,0}_{-\text{2,2}}$ & $0,34$ & Sim \\
+        \hline
+        Uniforme & $422,6^{+2,2}_{-\text{2,1}}$ & $413,8^{+2,0}_{-\text{1,9}}$ & $\mathbf{3,06}$ & \textbf{Não} \\
+        \hline
+    \end{tabular}
+    \renewcommand{\arraystretch}{1.0} % Retorna ao padrão
+\end{table}
+
+Analisada a compatibilidade entre amostras, o último passo foi a comparação entre resultados do Kalkayotl com estimativas de distância da literatura. Dado que três dos quatro priors se mostraram compatíveis amostralmente, utilizou-se apenas a amostra selecionada \(A_{cut}\) para esta etapa. Devido à ausência de incertezas nos resultados fornecidos por \cite{cantat-gaudin_painting_2020} e \cite{dias_new_2002}, estes foram comparados apenas de maneira quantitativa aos resultados do Kalkayotl, de modo que o primeiro se mostrou muito próximo do obtido, enquanto o segundo apresentou uma disparidade grande, justificada pela imprecisão das medidas efetuadas pelo Hipparcus quando comparado ao Gaia e à utilização do método da inversão da paralaxe. Com relação às estimativas de \cite{dias_updated_2021} e \cite{hunt_improving_2024}, foi realizado novamente o Teste-Z para um intervalo de confiança de \(2\sigma\) (Tabela \ref{tab:comparacao_final}).
+
+\begin{table}[h]
+    \centering
+    \caption{Comparação Final dos Priors com a amostra selecionada ($A_{\text{cut}}$) e Teste-Z (\(2\sigma\)) com os valores da literatura.}
+    \label{tab:comparacao_final}
+    \renewcommand{\arraystretch}{1.5} % Aumenta o espaçamento vertical
+    \begin{tabular}{|l|c|c|c|c|c|}
+        \hline
+        \textbf{Prior} & $\mathbf{A_{\text{cut}}}$ [pc] & $\mathbf{Z_{\text{Dias-A}_{\text{cut}}}}$ & \textbf{Comp. Dias} & $\mathbf{Z_{\text{Hunt-A}_{\text{cut}}}}$ & \textbf{Comp. Hunt} \\
+        \hline
+        EFF & $410,10^{+2,05}_{-\text{2,05}}$ & $0,03$ & Sim & $2,66$ & \textbf{Não} \\
+        \hline
+        Gaussiano & $411,40^{+1,95}_{-\text{2,00}}$ & $0,39$ & Sim & $3,40$ & \textbf{Não} \\
+        \hline
+        King & $409,90^{+1,95}_{-\text{2,15}}$ & $0,03$ & Sim & $2,56$ & \textbf{Não} \\
+        \hline
+        Uniforme & $413,80^{+2,00}_{-\text{1,90}}$ & $1,06$ & Sim & $4,67$ & \textbf{Não} \\
+        \hline
+    \end{tabular}
+    \renewcommand{\arraystretch}{1.0} % Retorna ao padrão
+\end{table}
+
+Nota-se que houve compatibilidade de todos os priors com o catálogo de \cite{dias_updated_2021}, enquanto que \cite{hunt_improving_2024} não concordou com nenhum dos valores obtidos. Essa divergência pode estar associada ao valor baixo da incerteza obtida por Hunt, podendo esta estar subestimada.
+
+Conclui-se por meio deste projeto que os priors mais úteis para o estudo da distância do aglomerado NGC 1662 foram EFF, Gaussiano e King, dado que todos apresentaram distribuição de probabilidade bem definida e suas cadeias de Markov convergiram para valores estáveis. Além disso, todos se mostraram compatíveis quando comparadas entre si as amostras \(A_{full}\) e \(A_{cut}\), bem como quando equiparados ao catálogo de \cite{dias_updated_2021}, mostrando resultados sólidos. Portanto, dada a robustez interna, os priors EFF, Gaussiano e King são os mais úteis para a determinação das distâncias de aglomerados próximos (\(<500pc\)) e bem populados (\(>200\) membros). Devido à sua simplicidade e acurácia, o prior Gaussiano e sua estimativa de distância de $411,4^{+2,0}_{-\text{2,0}}$ foram adotados pelo autor deste projeto como os mais úteis para a ocasião. Os resultados obtidos por estas famílias são estatisticamente compatíveis com a estimativa de ajuste de isócronas de Dias et al. (\citeyear{dias_updated_2021}), demonstrando a consistência do método Kalkayotl com a literatura do Gaia DR2.
+
+\section{Conclusão}
+
+A determinação precisa de distâncias de aglomerados estelares é um dos pilares da Astronomia Galáctica, sendo fundamental para calibrar a Escala de Distância Cósmica. O desafio de obter incertezas robustas, especialmente por conta das sistemáticas como a correlação espacial das paralaxes, foi o ponto central deste projeto. Para superar isso, empregamos o framework inovador de Inferência Bayesiana hierárquica do código Kalkayotl \cite{olivares_kalkayotl_2020}.
+
+Aplicado a diferentes tipos de priors, Kalkayotl se mostrou preciso para o aglomerado NGC 1662, tanto em sua amostra completa \(A_{full}\) quanto na selecionada \(A_{cut}\), proporcionando medidas robustas de distribuição de probabilidade de distâncias e iterações MCMC, de modo que, por meio da análise dos resultados, foi possível determinar a qualidade de cada prior na realização desta tarefa.
+
+Foi evidenciado que, para amostras ruidosas, sem seleção, o prior GMM resulta em estimativas ruins de distância, visto que acaba sendo contaminado por outliers. Entretanto, quando aplicado a amostras filtradas, apresenta bom desempenho, entregando resultados similares a valores da literatura. Dado que este valor não possuía contrapartida na amostra completa, foi decidido não utilizar a estimativa de distância de \(A_{cut}\) nas outras análises do projeto.
+
+Notou-se também que o prior Uniforme apresenta uma distribuição muito esparsa dos valores de distância de estrelas individuais, visto que assume uma distribui-se equivalentemente em todos os pontos do aglomerado, porém desempenha bem quando considerada a distância do aglomerado como um todo, visto que as incertezas aleatórias do alto número de membros acabam se cancelando e proporcionando uma distribuição mais bem definida.
+
+Quando estudadas as duas amostras, verificou-se compatibilidade para um intervalo de confiança de \(2\sigma\) para os priors EFF, Gaussiano e King, mostrando fortes argumentos sobre a estrutura mais simples de NGC 1662, enquanto o Uniforme se mostrou incompatível, enfatizando sua alta sensibilidade a conjuntos de dados ruidosos.
+
+Por fim, na comparação com a literatura, resultados de teste-Z para a amostra \(A_{cut}\) mostraram compatibilidade com os resultados catalogados por \cite{dias_updated_2021}, porém não concordaram com a distância de NGC 1662 fornecida por \cite{hunt_improving_2024}, divergência que pode estar atrelada a incertezas subestimadas pela autora deste catálogo.
 
 
-Abertos os arquivos no Python, iniciou-se o procedimento de limpeza dos dados. Foram então removidos os índices que apresentavam dados idênticos em todas as linhas e filtrada a base de dados para que fossem apenas utilizados os pontos onde \(7 \leq log age \leq 10\), sendo log age o logaritmo da idade das populações estelares do modelo. Feito isso, foi concluído o tratamento dos dados, permitindo assim a etapa de visualização e análise destes. 
-
-
-\subsection{Reprodução de Resultados Prévios da Literatura}
-A última tarefa deste primeiro semestre foi a reprodução de resultados prévios apresentados na literatura. Dado que o processo de análise e comparação das bibliotecas é o mesmo em todos os casos, para poder avaliar a qualidade de novos modelos de população estelar foi necessário primeiramente verificar se os algoritmos utilizados no Python reproduziam os mesmos resultados obtidos na literatura. Se isso fosse confirmado, era possível inferir então que os códigos utilizados estavam corretos, podendo assim serem aplicados em modelos mais recentes.
-
-Dessa forma, iniciou-se então um procedimento de reproduzir as figuras do trabalho publicado por minha orientadora em \cite{Paula2020}, dando ênfase naquelas que evidenciavam o efeito sintético, objeto de estudo deste projeto. Desta maneira, a primeira tentativa de reprodução foi a da figura 8 do artigo, apresentada na figura  deste projeto. Estes plots demonstram uma comparação direta entre os índices espectrais dos modelos SSP calculados com as bibliotecas MILES  e SynCoMiL, sendo possível observar por meio de uma linha 1-1, ou seja, uma reta \(f(x) = x\), se estes resultados são equivalentes ou não.
-
-
-
-Os resultados reproduzidos por mim estão apresentados na figura .
-Analisando as figuras obtidas, nota-se que a reprodução dos resultados do artigo foi atingida com sucesso, visto que, em todos os casos, os plots foram equivalentes. Além disso, é perceptível que na maioria dos índices os pontos se mantiveram sobre a linha 1-1, indicando igualdade entre as duas bibliotecas. 
-
-Entretanto, alguns índices apresentaram divergências consideráveis, sendo eles Ca4227, Fe4668, Mg1, Mg2, Fe5406, Fe5709 e B4000Vn. Nestes casos, houve uma disparidade entre os valores da MILES (SPS-M) e SynCoMiL (SPS-S), onde os pontos acabaram distoando da linha 1-1. Além disso, houveram casos como H83889, H93885 e H103798 onde, apesar de haver equilíbrio sobre a linha 1-1, houve uma dispersão maior dos pontos em torno dela, sendo interessante estudá-los também. 
-
-
-Após a confecção da figura , houveram algumas dificuldades na tentativa de criar as próximas figuras. Primeiramente, tentou-se reproduzir a parte correspondente ao efeito sintético da figura 11 do artigo, visto que esta utilizava do mesmo grupo de dados que as figuras anteriormente mostradas. Neste caso, foi feito um boxplot das diferenças entre os valores dos índices espectrais das bibliotecas MILES e SynCoMiL (\(\Delta idx\)):
-
-\[\Delta idx = I_{SPS-M} - I_{SPS-S}\]
-
-em que I é qualquer índice espectral. Feita esta subtração, foi então aplicada uma normalização da forma
-
-\[z = \frac{x-\mu}{\sigma}\]
-
-onde z é definido pela subtração do valor inicial de \(\Delta idx\) (x) pela média do conjunto (\(\mu\)), sendo este resultado dividido pelo desvio padrão (\(\sigma\)). Os resultados obtidos no artigo estão contidos na figura .
-
-O boxplot gerado pelo Python para reproduzir o artigo está contido na figura .
-É perceptível, quando comparados o plot do artigo com aquele feito por mim que houve grande diferença entre eles. Nota-se que, enquanto a figura  apresentou uma crescente nos resultados, indo de valores médios de -2,5 a aproximadamente 0, a média da figura  se manteve centrada neste segundo valor, não havendo muita variação em torno desta região. Além disso, os tamanhos das caixas em cada índice não correspondem aos obtidos por minha orientadora e seus colaboradores, demonstrando que não houve compatibilidade entre eles.
-
-Antes de discutir o por quê esta divergência pode ter ocorrido, vamos fornecer mais um exemplo.
-
-Outra plot que tentou-se refazer, foi o gráfico de densidade presente na figura 7 do artigo (reproduzido nesse texto na figura ). Neste caso, foram utlizados os valores de \(\Delta idx\) calculados anteriormente e plotadas suas densidades.
-
-Novamente com o objetivo de estudar e enfatizar o efeito sintético, foram plotados os gráficos apenas referentes a ele, apresentados na figura .
-Avaliando as figuras e , percebe-se mais uma vez que não houve correspondência entre os resultados. Quando analisado o eixo x, é notável que, em alguns casos, a largura da distribuição não apresentou o tamanho esperado, como para os índices TiO1 e TiO2, onde, apesar das distribuições apresentarem a mesma forma, no artigo foi obtida uma ordem de grandeza de \(10^{-2}\), enquanto nos meus resultados, esta foi de \(10^1\). Outro fator interessante é o fato de, em alguns casos, o formato da distribuição divergir, como no caso do índice Fe5015, em que os picos do artigo e deste projeto aparentam estar invertidos. 
-
-Muitas foram as tentativas para avaliar e identifcar o motivo dos resultados estarem se diferenciando tanto. A princípio, foi levantada a hipótese de eu estar manuseando de maneira errada os arquivos FITS, sendo então estes substituídos pelo formato txt. Entretanto, após a troca, a diferença persistiu.
-
-Após isso, o foco foi mudado não para o formato do arquivo e como utilizá-lo, mas sim para as operações matemáticas que estavam envolvidas, já que, em todos os casos problemáticos, houve algo em comum: a subtração dos valores dos índices (\(\Delta idx\)). Assim, foi inicialmente debatido que pode ter ocorrido uma falta de correspondência nos valores subtraídos, ou seja, \(\Delta idx\) estava sendo calculado realizando a diferença de valores espectrais com idades diferentes. Dessa forma, foi então realizada uma correlação cruzada entre as tabelas MILES e SynCoMiL considerando os fatores log age e metalicidade (Z) como determinantes. Apesar de resultar em um formato mais parecido com o esperado nas densidades (figura), ainda assim algumas diferenças persistiram.
-
-Foi cogitado, por fim, que a utilização de linguagens de programação distintas pode ter causado erro nos resultados finais. Originalmente, os plots e a análise do artigo foram todos feitos em R, enquanto neste projeto foi usado o Python. Obviamente, isto não deveria afetar os plots, já que ambas são linguagens muito robustas e muito competentes no tratamento de dados. Entretanto, visto que cada uma delas possui bibliotecas diferentes, estas possuem nuances em suas funções embutidas que podem ter feito com que as operações matemáticas fossem feitas de formas distintas, resultando assim nestes resultados incompatíveis.
-
-Infelizmente não foi possível encontrar o motivo principal destes problemas, visto que, como me graduei, não darei seguimento nas atividades da IC, partindo agora para a pós graduação. Entretanto, como continuarei trabalhando com astronomia extragalática, Python e R, utilizarei os conhecimentos e hipóteses levantados ao longo deste projeto em minhas futuras pesquisas. 
-
-\section{Desempenho Acadêmico}
-No segundo semestre de 2024, referente à primeira metade da minha iniciação científica, estive matriculado nas disciplinas de 'Introdução à Cosmologia Física' e 'Introdução ao Caos' nas quais fui aprovado com as médias finais 7,5 e 9,1, respectivamente. Além disso, concluí todos os créditos requeridos pelo meu curso, me graduando assim no Bacharelado em Física pelo Instituto de Física da Universidade de São Paulo (IFUSP). Fui aceito no programa de Mestrado em Astronomia do IAG, onde continuarei minhas atividades acadêmicas.
-
-\section{Conclusões e Perspectivas}
-
-Ao longo deste projeto de IC, foi possível conhecer mais sobre a definição e os usos de modelos de síntese de população estelar, bem como sobre programação, tratamento de dados e análise estatística.
-
-Ao longo do semestre, foram desenvolvidas as atividades de estudo bibliográfico, onde pude compreender mais sobre o funcionamento dos modelos e sobre o modo de operação das linguagens Python e R; manuseamento e limpeza de dados, em que me foi permitido trabalhar diretamente com os modelos de população estelar, compreendendo mais sobre como filtrar e administrar conjunto de dados; e reprodução de resultados prévios da literatura, na qual foram refeitos os gráficos publicados no artigo base deste projeto.
-
-Estes resultados obtidos foram parcialmente compatíveis com o esperado. Para comparações diretas entre os índices espectrais de modelos construídos com as bibliotecas MILES e SynCoMiL, nossos resultados reproduzem os da literatura, revelando semelhança grande entre as bibliotecas. Além disso, foram evidenciados também alguns índices espectrais divergentes que merecem ser reelaborados, como Ca4227, Fe4668, Mg1, Mg2, Fe5406, Fe5709 e B4000Vn.
-
-Já quando foi feito o cálculo de diferenças de índices normalizados, não houve reciprocidade entre os resultados obtidos aqui e os da literatura, de forma que foram cogitados diversos fatores que pudessem ter acarretado essa questão, sendo o mais provável algo relacionado às diferenças de funcionamento entre as bibliotecas do R e do Python.
-
-Devido à conclusão da minha graduação, infelizmente não será possível permanecer investigando o que causou estes erros, porém, seguirei minha vida acadêmica no mestrado em Astronomia no IAG-USP, onde estudarei a morfologia de galáxias disco, por meio do código Capivara. Como utilizarei de análise de dados e da linguagem R novamente, todo o conhecimento astronômico e técnico que aprendi ao longo dessa IC me serão muito úteis nesta nova etapa. 
+Portanto, os priors estáveis são os mais adequados para o estudo de aglomerados próximos. O resultado final do Kalkayotl, utilizando o prior Gaussiano da amostra selecionada, forneceu a distância de  $411,4^{+2,0}_{-\text{2,0}}$ parsecs, sendo este o prior considerado o mais útil para os fins deste projeto.
 
 % No seu arquivo main.tex:
 % ... SEU DOCUMENTO TERMINA AQUI ...
 
 
 \bibliography{bibtex} % Apenas o comando para carregar os dados
-\begin{thebibliography}{99}
-\end{thebibliography}
+%\begin{thebibliography}{99}
+%\end{thebibliography}
 
 \end{document}
 

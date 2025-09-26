@@ -5,6 +5,14 @@
 \providecommand{\abntbstabout}[1]{}
 \abntbstabout{v-1.9.7 }
 
+\bibitem[Bailer-Jones 2015]{bailer-jones_estimating_2015}
+\abntrefinfo{Bailer-Jones}{BAILER-JONES}{2015}
+{BAILER-JONES, C. A.~L. Estimating {Distances} from {Parallaxes}.
+\emph{Publications of the Astronomical Society of the Pacific}, v.~127, p.~994, out. 2015.
+ISSN 0004-6280.
+ADS Bibcode: 2015PASP..127..994B.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2015PASP..127..994B}.}
+
 \bibitem[Campello, Moulavi e Sander 2013]{campello_density-based_2013}
 \abntrefinfo{Campello, Moulavi e Sander}{CAMPELLO; MOULAVI; SANDER}{2013}
 {CAMPELLO, R. J. G.~B.; MOULAVI, D.; SANDER, J. Density-{Based} {Clustering} {Based} on {Hierarchical} {Density} {Estimates}. In:  PEI, J. et al. (Ed.). \emph{Advances in {Knowledge} {Discovery} and {Data} {Mining}}. Berlin, Heidelberg: Springer, 2013. p. 160--172.
@@ -34,6 +42,14 @@ ISSN 0035-8711.
 ADS Bibcode: 2021MNRAS.504..356D.
 Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2021MNRAS.504..356D}.}
 
+\bibitem[Elson, Fall e Freeman 1987]{elson_structure_1987}
+\abntrefinfo{Elson, Fall e Freeman}{ELSON; FALL; FREEMAN}{1987}
+{ELSON, R. A.~W.; FALL, S.~M.; FREEMAN, K.~C. The {Structure} of {Young} {Star} {Clusters} in the {Large} {Magellanic} {Cloud}.
+\emph{The Astrophysical Journal}, v.~323, p.~54, dez. 1987.
+ISSN 0004-637X.
+Publisher: IOP ADS Bibcode: 1987ApJ...323...54E.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/1987ApJ...323...54E}.}
+
 \bibitem[{ESA} 1997]{esa_hipparcos_1997}
 \abntrefinfo{{ESA}}{{ESA}}{1997}
 {{ESA}. The {HIPPARCOS} and {TYCHO} catalogues. {Astrometric} and photometric star catalogues derived from the {ESA} {HIPPARCOS} {Space} {Astrometry} {Mission}.
@@ -58,6 +74,14 @@ ISSN 0004-6361.
 ADS Bibcode: 2016A\&A...595A...1G.
 Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2016A&A...595A...1G}.}
 
+\bibitem[Groenewegen 2021]{groenewegen_parallax_2021}
+\abntrefinfo{Groenewegen}{GROENEWEGEN}{2021}
+{GROENEWEGEN, M. a.~T. The parallax zero-point offset from {Gaia} {EDR3} data.
+\emph{A\&A}, v.~654, p.~A20, out. 2021.
+ISSN 0004-6361, 1432-0746.
+Publisher: EDP Sciences.
+Dispon{\'\i}vel em: \url{https://www.aanda.org/articles/aa/abs/2021/10/aa40862-21/aa40862-21.html}.}
+
 \bibitem[Hunt e Reffert 2024]{hunt_improving_2024}
 \abntrefinfo{Hunt e Reffert}{HUNT; REFFERT}{2024}
 {HUNT, E.~L.; REFFERT, S. Improving the open cluster census. {III}. {Using} cluster masses, radii, and dynamics to create a cleaned open cluster catalogue.
@@ -65,6 +89,14 @@ Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2016A&A...595A...1G}.
 ISSN 0004-6361.
 Publisher: EDP ADS Bibcode: 2024A\&A...686A..42H.
 Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/2024A&A...686A..42H}.}
+
+\bibitem[King 1962]{king_structure_1962}
+\abntrefinfo{King}{KING}{1962}
+{KING, I. The structure of star clusters. {I}. an empirical density law.
+\emph{The Astronomical Journal}, v.~67, p.~471, out. 1962.
+ISSN 0004-6256.
+Publisher: IOP ADS Bibcode: 1962AJ.....67..471K.
+Dispon{\'\i}vel em: \url{https://ui.adsabs.harvard.edu/abs/1962AJ.....67..471K}.}
 
 \bibitem[Olivares et al. 2020]{olivares_kalkayotl_2020}
 \abntrefinfo{Olivares et al.}{OLIVARES et al.}{2020}

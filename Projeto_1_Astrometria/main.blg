@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2023/Debian)
+This is BibTeX, Version 0.99d (TeX Live 2025)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: abntex2-alf.bst
@@ -13,10 +13,6 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated wiz_functions (elt_size=4) to 9000 items from 6000.
 Database file #1: abntex2-options.bib
 Database file #2: bibtex.bib
-Warning--I didn't find a database entry for "BC03"
-Warning--I didn't find a database entry for "Paula2014"
-Warning--I didn't find a database entry for "Paula2020"
-Warning--I didn't find a database entry for "starlight"
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated glb_str_ptr (elt_size=4) to 20 items from 10.
 Reallocated global_strs (elt_size=200001) to 20 items from 10.
@@ -26,45 +22,44 @@ Reallocated glb_str_end (elt_size=4) to 20 items from 10.
 | Em caso de dúvidas ou problemas com este estilo procure |
 | http://www.abntex.net.br/                               |
 +---------------------------------------------------------+
-You've used 11 entries,
+You've used 15 entries,
             6714 wiz_defined-function locations,
-            1288 strings with 27081 characters,
-and the built_in function-call counts, 19177 in all, are:
-= -- 2319
-> -- 402
-< -- 510
-+ -- 682
-- -- 116
-* -- 1243
-:= -- 2386
-add.period$ -- 61
-call.type$ -- 11
-change.case$ -- 145
-chr.to.int$ -- 38
-cite$ -- 10
-duplicate$ -- 1904
-empty$ -- 584
-format.name$ -- 582
-if$ -- 3817
+            1317 strings with 27998 characters,
+and the built_in function-call counts, 26573 in all, are:
+= -- 3234
+> -- 502
+< -- 757
++ -- 954
+- -- 146
+* -- 1685
+:= -- 3261
+add.period$ -- 85
+call.type$ -- 15
+change.case$ -- 185
+chr.to.int$ -- 54
+cite$ -- 14
+duplicate$ -- 2784
+empty$ -- 781
+format.name$ -- 721
+if$ -- 5215
 int.to.chr$ -- 0
 int.to.str$ -- 0
-missing$ -- 200
-newline$ -- 85
-num.names$ -- 51
-pop$ -- 250
+missing$ -- 274
+newline$ -- 117
+num.names$ -- 71
+pop$ -- 331
 preamble$ -- 1
-purify$ -- 50
+purify$ -- 64
 quote$ -- 0
-skip$ -- 1941
+skip$ -- 2788
 stack$ -- 1
-substring$ -- 753
-swap$ -- 733
-text.length$ -- 27
+substring$ -- 1049
+swap$ -- 1066
+text.length$ -- 39
 text.prefix$ -- 0
 top$ -- 0
 type$ -- 1
 warning$ -- 0
-while$ -- 78
+while$ -- 106
 width$ -- 0
-write$ -- 196
-(There were 4 warnings)
+write$ -- 272
