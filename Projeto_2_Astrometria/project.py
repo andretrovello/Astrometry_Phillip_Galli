@@ -5,10 +5,11 @@ from sklearn.cluster import KMeans, DBSCAN
 from sklearn.metrics import silhouette_score, silhouette_samples
 import matplotlib.cm as cm
 
-data = pd.read_csv('dados_orion.csv')
+data = pd.read_csv('taurus_membros_dr3.csv')
 df = pd.DataFrame(data)
-X = df[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
+#X = df[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
 #print(X['ra'])
+print(df)
 
 '''plt.figure()
 plt.plot(df['ra'],df['dec'], '.')
@@ -144,7 +145,7 @@ plt.show()'''
 
 avg_silhouettes = []
 
-for n_clusters in range_n_clusters:
+'''for n_clusters in range_n_clusters:
     # Initialize the clusterer with n_clusters value and a random generator
     # seed of 10 for reproducibility.
     clusterer = KMeans(n_clusters=n_clusters, random_state=10)
@@ -173,10 +174,10 @@ ax1.set_ylabel('Average Silhouette Score')
 ax2.scatter(X['ra'], X['dec'], c=cluster_labels)
 ax2.set_xlabel('ra (°)')
 ax2.set_ylabel('dec (°)')
-plt.show()
+plt.show()'''
 
 
-db = DBSCAN(eps=0.3, min_samples=10).fit(X)
+'''db = DBSCAN(eps=0.3, min_samples=10).fit(X)
 labels = db.labels_
 
 # Number of clusters in labels, ignoring noise if present.
@@ -185,3 +186,17 @@ n_noise_ = list(labels).count(-1)
 
 print("Estimated number of clusters: %d" % n_clusters_)
 print("Estimated number of noise points: %d" % n_noise_)
+print(len(X))'''
+
+print(df.columns)
+
+df_cleaned = df.dropna(axis=0)
+
+print(df_cleaned)
+
+plt.figure()
+plt.plot(df_cleaned['ra'],df_cleaned['dec'], '.')
+plt.xlabel('ra (°)')
+plt.ylabel('dec (°)')
+plt.show()
+
