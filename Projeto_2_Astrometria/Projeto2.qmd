@@ -3,9 +3,9 @@ title: "Projeto 2 Astrometria"
 author: "André Almeida Trovello"
 format: pdf
 ---
-# Estudo de regiões de formação estelar (Taurus) com métodos de MAchine Learning
+# Estudo de regiões de formação estelar (Taurus) com métodos de Machine Learning
 
-## Query
+# 1. Query
 ### Importando Bibliotecas
 
 ```{python}
@@ -26,7 +26,7 @@ data = pd.read_csv('galli_2019_table1.csv')
 main_table = pd.DataFrame(data)
 ```
 
-### Tabela de Vizier
+### Tabela do Vizier
 
 ```{python}
 # Garanta que a variável 'main_table' exista.
@@ -125,7 +125,7 @@ except Exception as e:
     print(e)
 ```
 
-## Clustering
+# 2. Clustering
 ### Carregando tabelas
 ```{python}
 data = pd.read_csv('taurus_membros_dr3.csv')

@@ -126,12 +126,6 @@ from astropy.table import Table
 data = pd.read_csv('galli_2019_table1.csv')
 main_table = pd.DataFrame(data)
 
-
-from astroquery.gaia import Gaia
-import pandas as pd
-import numpy as np
-from astropy.table import Table
-
 # ---------------------------------------------------------------
 # PASSO 1: CARREGAR SUA TABELA DO VIZIER
 # ---------------------------------------------------------------
