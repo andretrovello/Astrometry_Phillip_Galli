@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -21,20 +21,59 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="Projeto2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="Projeto2_files/libs/clipboard/clipboard.min.js"></script>
 <script src="Projeto2_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="Projeto2_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="Projeto2_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="Projeto2_files/libs/quarto-html/popper.min.js"></script>
 <script src="Projeto2_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="Projeto2_files/libs/quarto-html/anchor.min.js"></script>
 <link href="Projeto2_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Projeto2_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="Projeto2_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="Projeto2_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="Projeto2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Projeto2_files/libs/bootstrap/bootstrap-7a56ce26e122e4353366eabcf6e6b5fb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="Projeto2_files/libs/bootstrap/bootstrap-c2532d4ce04b51c887d6afe65476a692.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
 </head>
@@ -72,6 +111,580 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="estudo-de-regiões-de-formação-estelar-taurus-com-métodos-de-machine-learning" class="level1">
 <h1>Estudo de regiões de formação estelar (Taurus) com métodos de MAchine Learning</h1>
+<section id="query" class="level2">
+<h2 class="anchored" data-anchor-id="query">Query</h2>
+<section id="importando-bibliotecas" class="level3">
+<h3 class="anchored" data-anchor-id="importando-bibliotecas">Importando Bibliotecas</h3>
+<div id="77d2915f" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.cm <span class="im">as</span> cm</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astroquery.gaia <span class="im">import</span> Gaia</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.cluster <span class="im">import</span> KMeans, DBSCAN</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> silhouette_score, silhouette_samples</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> astropy.table <span class="im">import</span> Table</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="criando-dataframe" class="level3">
+<h3 class="anchored" data-anchor-id="criando-dataframe">Criando Dataframe</h3>
+<div id="77922cc8" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'galli_2019_table1.csv'</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>main_table <span class="op">=</span> pd.DataFrame(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="tabela-de-vizier" class="level3">
+<h3 class="anchored" data-anchor-id="tabela-de-vizier">Tabela de Vizier</h3>
+<div id="ddb2b9a0" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Garanta que a variável 'main_table' exista.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Se você estiver rodando o script do zero, você precisa</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># carregar o arquivo CSV que você salvou do VizieR.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Se você já tiver 'main_table' na memória (ex: num notebook), pule</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    main_table</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Variável 'main_table' já existe na memória."</span>)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">NameError</span>:</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">try</span>:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Tente carregar do CSV</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Substitua 'galli_2019_table1.csv' pelo nome que você usou</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        main_table <span class="op">=</span> Table.read(<span class="st">'galli_2019_table1.csv'</span>) </span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Arquivo 'galli_2019_table1.csv' carregado com sucesso."</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Erro: A variável 'main_table' não foi encontrada na memória."</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"E o arquivo 'galli_2019_table1.csv' não foi encontrado no disco."</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="st">"Por favor, rode o script do VizieR primeiro ou verifique o nome do arquivo CSV."</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Variável 'main_table' já existe na memória.</code></pre>
+</div>
+</div>
+</section>
+<section id="limpar-os-ids" class="level3">
+<h3 class="anchored" data-anchor-id="limpar-os-ids">Limpar os IDs</h3>
+<p>Remove “Gaia DR2” dos nomes dos objetos mantendo apenas seus IDs</p>
+<div id="2d3dc816" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Iniciando a limpeza dos IDs..."</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    dr2_id_strings <span class="op">=</span> main_table[<span class="st">'GaiaDR2'</span>].tolist()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    dr2_ids_cleaned_list <span class="op">=</span> []</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    ids_pulados <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> s <span class="kw">in</span> dr2_id_strings:</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">try</span>:</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>            id_str <span class="op">=</span> s.split(<span class="st">' '</span>)[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>            numeric_id <span class="op">=</span> np.int64(id_str) </span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>            dr2_ids_cleaned_list.append(numeric_id)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">except</span> (<span class="pp">AttributeError</span>, <span class="pp">IndexError</span>, <span class="pp">ValueError</span>):</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>            ids_pulados <span class="op">+=</span> <span class="dv">1</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>            </span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Encontrada e limpa a lista de </span><span class="sc">{</span><span class="bu">len</span>(dr2_ids_cleaned_list)<span class="sc">}</span><span class="ss"> IDs (DR2) válidos."</span>)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> ids_pulados <span class="op">&gt;</span> <span class="dv">0</span>:</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(<span class="ss">f"(</span><span class="sc">{</span>ids_pulados<span class="sc">}</span><span class="ss"> linhas foram puladas por não terem um ID válido)"</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> (<span class="pp">KeyError</span>) <span class="im">as</span> e:</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Erro: A coluna 'GaiaDR2' não foi encontrada na 'main_table'."</span>)</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iniciando a limpeza dos IDs...
+Encontrada e limpa a lista de 458 IDs (DR2) válidos.
+(61 linhas foram puladas por não terem um ID válido)</code></pre>
+</div>
+</div>
+</section>
+<section id="cria-a-tabela-para-upload-e-a-query-organizada" class="level3">
+<h3 class="anchored" data-anchor-id="cria-a-tabela-para-upload-e-a-query-organizada">Cria a tabela para upload e a query organizada</h3>
+<div id="3f168f7f" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>upload_table <span class="op">=</span> Table({<span class="st">'dr2_source_id_list'</span>: dr2_ids_cleaned_list})</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># QUERY CORRIGIDA E OTIMIZADA:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Começa com a sua tabela (user_table)</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Usa o nome correto da tabela (gaiadr3.dr2_neighbourhood)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>query_dr3 <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="st">SELECT</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st">    dr3.source_id, dr3.ra, dr3.dec, dr3.parallax, dr3.pmra, dr3.pmdec, dr3.ruwe</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st">FROM</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">    tap_upload.my_table AS user_table</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="st">    gaiadr3.dr2_neighbourhood AS xmatch</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="st">    ON user_table.dr2_source_id_list = xmatch.dr2_source_id</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="st">JOIN</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="st">    gaiadr3.gaia_source AS dr3</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="st">    ON xmatch.dr3_source_id = dr3.source_id</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a><span class="st">"""</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="executa-a-busca" class="level3">
+<h3 class="anchored" data-anchor-id="executa-a-busca">Executa a busca</h3>
+<div id="65a5affb" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Iniciando a busca no Gaia DR3 (com query otimizada)..."</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    job <span class="op">=</span> Gaia.launch_job_async(</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        query<span class="op">=</span>query_dr3,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        upload_resource<span class="op">=</span>upload_table,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        upload_table_name<span class="op">=</span><span class="st">"my_table"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        verbose<span class="op">=</span><span class="va">True</span>  <span class="co"># Adiciona mais informações de debug</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    results_dr3_members <span class="op">=</span> job.get_results()</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Busca concluída!"</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Foram encontrados dados no DR3 para </span><span class="sc">{</span><span class="bu">len</span>(results_dr3_members)<span class="sc">}</span><span class="ss"> das </span><span class="sc">{</span><span class="bu">len</span>(dr2_ids_cleaned_list)<span class="sc">}</span><span class="ss"> estrelas."</span>)</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">--- 5 primeiras linhas dos membros de Taurus (dados do DR3) ---"</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(results_dr3_members.to_pandas().head())</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Salve os resultados se desejar</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    results_dr3_members.write(<span class="st">'taurus_membros_dr3.csv'</span>, <span class="bu">format</span><span class="op">=</span><span class="st">'csv'</span>, overwrite<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span> <span class="im">as</span> e:</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Ocorreu um erro durante a busca no Gaia:"</span>)</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(e)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Iniciando a busca no Gaia DR3 (com query otimizada)...
+Launched query: '
+SELECT
+    dr3.source_id, dr3.ra, dr3.dec, dr3.parallax, dr3.pmra, dr3.pmdec, dr3.ruwe
+FROM
+    tap_upload.my_table AS user_table
+JOIN
+    gaiadr3.dr2_neighbourhood AS xmatch
+    ON user_table.dr2_source_id_list = xmatch.dr2_source_id
+JOIN
+    gaiadr3.gaia_source AS dr3
+    ON xmatch.dr3_source_id = dr3.source_id
+'
+------&gt;https
+host = gea.esac.esa.int:443
+context = /tap-server/tap/async
+Content-type = multipart/form-data; boundary====1762457805841===
+303 303
+[('Date', 'Thu, 06 Nov 2025 19:36:46 GMT'), ('Server', 'Apache/2.4.6 (SLES Expanded Support platform 7) OpenSSL/1.0.2k-fips mod_jk/1.2.43'), ('Set-Cookie', 'JSESSIONID=8C46721ADAF40566401B4A7CA3166099; Path=/tap-server; Secure; HttpOnly'), ('Location', 'https://gea.esac.esa.int/tap-server/tap/async/1762457806707O'), ('Cache-Control', 'no-cache, no-store, max-age=0, must-revalidate'), ('Pragma', 'no-cache'), ('Expires', '0'), ('X-XSS-Protection', '1; mode=block'), ('X-Frame-Options', 'SAMEORIGIN'), ('X-Content-Type-Options', 'nosniff'), ('Transfer-Encoding', 'chunked'), ('Content-Type', 'text/plain;charset=ISO-8859-1')]
+job 1762457806707O, at: https://gea.esac.esa.int/tap-server/tap/async/1762457806707O
+Retrieving async. results...
+INFO: Query finished. [astroquery.utils.tap.core]
+
+Busca concluída!
+Foram encontrados dados no DR3 para 499 das 458 estrelas.
+
+--- 5 primeiras linhas dos membros de Taurus (dados do DR3) ---
+            source_id         ra        dec  parallax       pmra      pmdec  \
+0  162535413750345856  60.955653  26.181023  6.758039  20.853242 -30.277735   
+1  162535413754166528  60.955305  26.180727  7.803457  20.133753 -27.911397   
+2  162541942104406784  60.958322  26.343862  6.971044  14.435075 -19.268191   
+3  162535345034688768  60.961924  26.181260  7.731206  19.547795 -30.009057   
+4   53092775104124288  61.164068  21.971754  8.147688   3.802709 -15.247629   
+
+        ruwe  
+0  21.986296  
+1   1.159977  
+2   1.049943  
+3   2.134250  
+4   5.566028  </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="clustering" class="level2">
+<h2 class="anchored" data-anchor-id="clustering">Clustering</h2>
+<section id="carregando-tabelas" class="level3">
+<h3 class="anchored" data-anchor-id="carregando-tabelas">Carregando tabelas</h3>
+<div id="6cb237a7" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> pd.read_csv(<span class="st">'taurus_membros_dr3.csv'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.DataFrame(data)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#X = df[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">#print(X['ra'])</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">#print(df)</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Calcule as contagens de cada source_id</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>counts <span class="op">=</span> df[<span class="st">'source_id'</span>].value_counts()</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Use .map() para criar uma nova série do mesmo tamanho do df,</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">#    onde cada valor é a contagem do seu respectivo source_id.</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    Depois, compare com 2 para criar o filtro correto.</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>rep <span class="op">=</span> df[df[<span class="st">'source_id'</span>].<span class="bu">map</span>(counts) <span class="op">==</span> <span class="dv">2</span>].dropna()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>rep</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">source_id</th>
+<th data-quarto-table-cell-role="th">ra</th>
+<th data-quarto-table-cell-role="th">dec</th>
+<th data-quarto-table-cell-role="th">parallax</th>
+<th data-quarto-table-cell-role="th">pmra</th>
+<th data-quarto-table-cell-role="th">pmdec</th>
+<th data-quarto-table-cell-role="th">ruwe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">34</th>
+<td>163179006011625088</td>
+<td>63.717943</td>
+<td>28.099839</td>
+<td>7.486891</td>
+<td>8.195294</td>
+<td>-22.940540</td>
+<td>1.486537</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">35</th>
+<td>163179006011625216</td>
+<td>63.718513</td>
+<td>28.099846</td>
+<td>7.183761</td>
+<td>9.408134</td>
+<td>-24.033823</td>
+<td>0.964844</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">36</th>
+<td>163179006011625088</td>
+<td>63.717943</td>
+<td>28.099839</td>
+<td>7.486891</td>
+<td>8.195294</td>
+<td>-22.940540</td>
+<td>1.486537</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">37</th>
+<td>163179006011625216</td>
+<td>63.718513</td>
+<td>28.099846</td>
+<td>7.183761</td>
+<td>9.408134</td>
+<td>-24.033823</td>
+<td>0.964844</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">99</th>
+<td>152416436443721728</td>
+<td>65.289006</td>
+<td>27.843380</td>
+<td>7.676996</td>
+<td>7.989072</td>
+<td>-26.709809</td>
+<td>1.475887</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">101</th>
+<td>152416436443721728</td>
+<td>65.289006</td>
+<td>27.843380</td>
+<td>7.676996</td>
+<td>7.989072</td>
+<td>-26.709809</td>
+<td>1.475887</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">159</th>
+<td>152180827420224128</td>
+<td>67.177628</td>
+<td>27.234390</td>
+<td>7.770386</td>
+<td>7.754825</td>
+<td>-25.039691</td>
+<td>1.259471</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">160</th>
+<td>152180831716415488</td>
+<td>67.177664</td>
+<td>27.234215</td>
+<td>7.105773</td>
+<td>9.080319</td>
+<td>-26.201142</td>
+<td>1.288789</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">161</th>
+<td>152180827420224128</td>
+<td>67.177628</td>
+<td>27.234390</td>
+<td>7.770386</td>
+<td>7.754825</td>
+<td>-25.039691</td>
+<td>1.259471</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">162</th>
+<td>152180831716415488</td>
+<td>67.177664</td>
+<td>27.234215</td>
+<td>7.105773</td>
+<td>9.080319</td>
+<td>-26.201142</td>
+<td>1.288789</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">188</th>
+<td>146361013590374144</td>
+<td>67.623320</td>
+<td>24.445807</td>
+<td>6.368969</td>
+<td>8.908057</td>
+<td>-24.076122</td>
+<td>2.409950</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">190</th>
+<td>146361013590374144</td>
+<td>67.623320</td>
+<td>24.445807</td>
+<td>6.368969</td>
+<td>8.908057</td>
+<td>-24.076122</td>
+<td>2.409950</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">195</th>
+<td>145921994918655488</td>
+<td>67.709547</td>
+<td>23.002367</td>
+<td>8.029621</td>
+<td>11.949303</td>
+<td>-14.773370</td>
+<td>3.447316</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">196</th>
+<td>145921999215653632</td>
+<td>67.709932</td>
+<td>23.002332</td>
+<td>6.827561</td>
+<td>10.848324</td>
+<td>-16.615883</td>
+<td>1.289605</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">197</th>
+<td>145921994918655488</td>
+<td>67.709547</td>
+<td>23.002367</td>
+<td>8.029621</td>
+<td>11.949303</td>
+<td>-14.773370</td>
+<td>3.447316</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">198</th>
+<td>145921999215653632</td>
+<td>67.709932</td>
+<td>23.002332</td>
+<td>6.827561</td>
+<td>10.848324</td>
+<td>-16.615883</td>
+<td>1.289605</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">231</th>
+<td>3314132593934981248</td>
+<td>68.126512</td>
+<td>17.524747</td>
+<td>6.752014</td>
+<td>12.825682</td>
+<td>-19.916297</td>
+<td>0.991326</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">232</th>
+<td>3314132593936245248</td>
+<td>68.126214</td>
+<td>17.525034</td>
+<td>6.873723</td>
+<td>13.179530</td>
+<td>-20.461011</td>
+<td>1.109948</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">234</th>
+<td>3314132593934981248</td>
+<td>68.126512</td>
+<td>17.524747</td>
+<td>6.752014</td>
+<td>12.825682</td>
+<td>-19.916297</td>
+<td>0.991326</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">235</th>
+<td>3314132593936245248</td>
+<td>68.126214</td>
+<td>17.525034</td>
+<td>6.873723</td>
+<td>13.179530</td>
+<td>-20.461011</td>
+<td>1.109948</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">312</th>
+<td>3313386605360382720</td>
+<td>68.982060</td>
+<td>17.127651</td>
+<td>6.948271</td>
+<td>11.938078</td>
+<td>-19.025502</td>
+<td>1.328659</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">313</th>
+<td>3313386609655429248</td>
+<td>68.981703</td>
+<td>17.127255</td>
+<td>6.674840</td>
+<td>13.216349</td>
+<td>-19.185871</td>
+<td>1.189423</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">314</th>
+<td>3313386605360382720</td>
+<td>68.982060</td>
+<td>17.127651</td>
+<td>6.948271</td>
+<td>11.938078</td>
+<td>-19.025502</td>
+<td>1.328659</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">315</th>
+<td>3313386609655429248</td>
+<td>68.981703</td>
+<td>17.127255</td>
+<td>6.674840</td>
+<td>13.216349</td>
+<td>-19.185871</td>
+<td>1.189423</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">454</th>
+<td>155744074023050368</td>
+<td>74.714590</td>
+<td>28.523333</td>
+<td>6.975570</td>
+<td>6.545382</td>
+<td>-31.430755</td>
+<td>0.921676</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">455</th>
+<td>155744074024631296</td>
+<td>74.714207</td>
+<td>28.523221</td>
+<td>6.877693</td>
+<td>6.051624</td>
+<td>-29.397043</td>
+<td>1.955640</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">456</th>
+<td>155744074023050368</td>
+<td>74.714590</td>
+<td>28.523333</td>
+<td>6.975570</td>
+<td>6.545382</td>
+<td>-31.430755</td>
+<td>0.921676</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">457</th>
+<td>155744074024631296</td>
+<td>74.714207</td>
+<td>28.523221</td>
+<td>6.877693</td>
+<td>6.051624</td>
+<td>-29.397043</td>
+<td>1.955640</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">479</th>
+<td>156430817820015232</td>
+<td>76.956544</td>
+<td>30.401316</td>
+<td>5.454096</td>
+<td>4.906034</td>
+<td>-24.577535</td>
+<td>16.422132</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">480</th>
+<td>156430822114424576</td>
+<td>76.956081</td>
+<td>30.401205</td>
+<td>6.406249</td>
+<td>2.640643</td>
+<td>-27.397583</td>
+<td>1.500373</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">481</th>
+<td>156430817820015232</td>
+<td>76.956544</td>
+<td>30.401316</td>
+<td>5.454096</td>
+<td>4.906034</td>
+<td>-24.577535</td>
+<td>16.422132</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">482</th>
+<td>156430822114424576</td>
+<td>76.956081</td>
+<td>30.401205</td>
+<td>6.406249</td>
+<td>2.640643</td>
+<td>-27.397583</td>
+<td>1.500373</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">495</th>
+<td>3415706130944329216</td>
+<td>78.114951</td>
+<td>22.896915</td>
+<td>5.714827</td>
+<td>5.981752</td>
+<td>-18.593437</td>
+<td>2.437345</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">497</th>
+<td>3415706130944329216</td>
+<td>78.114951</td>
+<td>22.896915</td>
+<td>5.714827</td>
+<td>5.981752</td>
+<td>-18.593437</td>
+<td>2.437345</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<div id="5498e100" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Carregar os dados que você acabou de baixar</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>df_membros <span class="op">=</span> pd.read_csv(<span class="st">'taurus_membros_dr3.csv'</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Aplicar o filtro RUWE, como no artigo</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>df_limpo <span class="op">=</span> df_membros[df_membros[<span class="st">'ruwe'</span>] <span class="op">&lt;=</span> <span class="fl">1.4</span>].copy()</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Amostra original: </span><span class="sc">{</span><span class="bu">len</span>(df_membros)<span class="sc">}</span><span class="ss"> estrelas"</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Amostra limpa (RUWE &lt;= 1.4): </span><span class="sc">{</span><span class="bu">len</span>(df_limpo)<span class="sc">}</span><span class="ss"> estrelas"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Amostra original: 499 estrelas
+Amostra limpa (RUWE &lt;= 1.4): 294 estrelas</code></pre>
+</div>
+</div>
+</section>
+</section>
 </section>
 
 </main>
@@ -127,13 +740,14 @@ ul.task-list li input[type="checkbox"] {
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

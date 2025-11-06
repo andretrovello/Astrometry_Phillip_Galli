@@ -1,8 +1,166 @@
 ---
 title: "Projeto 2 Astrometria"
 author: "André Almeida Trovello"
-format: html
+format: pdf
 ---
 # Estudo de regiões de formação estelar (Taurus) com métodos de MAchine Learning
 
+## Query
+### Importando Bibliotecas
 
+```{python}
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from astroquery.gaia import Gaia
+from sklearn.cluster import KMeans, DBSCAN
+from sklearn.metrics import silhouette_score, silhouette_samples
+from astropy.table import Table
+```
+
+### Criando Dataframe
+```{python}
+data = pd.read_csv('galli_2019_table1.csv')
+main_table = pd.DataFrame(data)
+```
+
+### Tabela de Vizier
+
+```{python}
+# Garanta que a variável 'main_table' exista.
+# Se você estiver rodando o script do zero, você precisa
+# carregar o arquivo CSV que você salvou do VizieR.
+try:
+    # Se você já tiver 'main_table' na memória (ex: num notebook), pule
+    main_table
+    print("Variável 'main_table' já existe na memória.")
+except NameError:
+    try:
+        # Tente carregar do CSV
+        # Substitua 'galli_2019_table1.csv' pelo nome que você usou
+        main_table = Table.read('galli_2019_table1.csv') 
+        print("Arquivo 'galli_2019_table1.csv' carregado com sucesso.")
+    except FileNotFoundError:
+        print("Erro: A variável 'main_table' não foi encontrada na memória.")
+        print("E o arquivo 'galli_2019_table1.csv' não foi encontrado no disco.")
+        print("Por favor, rode o script do VizieR primeiro ou verifique o nome do arquivo CSV.")
+        raise
+```
+
+### Limpar os IDs
+Remove "Gaia DR2" dos nomes dos objetos mantendo apenas seus IDs
+```{python}
+print("Iniciando a limpeza dos IDs...")
+try:
+    dr2_id_strings = main_table['GaiaDR2'].tolist()
+    
+    dr2_ids_cleaned_list = []
+    ids_pulados = 0
+    
+    for s in dr2_id_strings:
+        try:
+            id_str = s.split(' ')[-1]
+            numeric_id = np.int64(id_str) 
+            dr2_ids_cleaned_list.append(numeric_id)
+        except (AttributeError, IndexError, ValueError):
+            ids_pulados += 1
+            
+    print(f"Encontrada e limpa a lista de {len(dr2_ids_cleaned_list)} IDs (DR2) válidos.")
+    if ids_pulados > 0:
+        print(f"({ids_pulados} linhas foram puladas por não terem um ID válido)")
+
+except (KeyError) as e:
+    print(f"Erro: A coluna 'GaiaDR2' não foi encontrada na 'main_table'.")
+    raise
+```
+
+### Cria a tabela para upload e a query organizada
+
+```{python}
+upload_table = Table({'dr2_source_id_list': dr2_ids_cleaned_list})
+
+# 1. Começa com a sua tabela (user_table)
+# 2. Usa o nome correto da tabela (gaiadr3.dr2_neighbourhood)
+query_dr3 = """
+SELECT
+    dr3.source_id, dr3.ra, dr3.dec, dr3.parallax, dr3.pmra, dr3.pmdec, dr3.ruwe
+FROM
+    tap_upload.my_table AS user_table
+JOIN
+    gaiadr3.dr2_neighbourhood AS xmatch
+    ON user_table.dr2_source_id_list = xmatch.dr2_source_id
+JOIN
+    gaiadr3.gaia_source AS dr3
+    ON xmatch.dr3_source_id = dr3.source_id
+"""
+```
+
+### Executa a busca 
+```{python}
+print("Iniciando a busca no Gaia DR3 (com query otimizada)...")
+
+try:
+    job = Gaia.launch_job_async(
+        query=query_dr3,
+        upload_resource=upload_table,
+        upload_table_name="my_table",
+        verbose=True  # Adiciona mais informações de debug
+    )
+    
+    results_dr3_members = job.get_results()
+
+    print(f"\nBusca concluída!")
+    print(f"Foram encontrados dados no DR3 para {len(results_dr3_members)} das {len(dr2_ids_cleaned_list)} estrelas.")
+
+    print("\n--- 5 primeiras linhas dos membros de Taurus (dados do DR3) ---")
+    print(results_dr3_members.to_pandas().head())
+
+    # Salve os resultados se desejar
+    results_dr3_members.write('taurus_membros_dr3.csv', format='csv', overwrite=True)
+
+except Exception as e:
+    print(f"\nOcorreu um erro durante a busca no Gaia:")
+    print(e)
+```
+
+## Clustering
+### Carregando tabelas
+```{python}
+data = pd.read_csv('taurus_membros_dr3.csv')
+df = pd.DataFrame(data)
+#X = df[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
+#print(X['ra'])
+#print(df)
+# 1. Calcule as contagens de cada source_id
+counts = df['source_id'].value_counts()
+
+# 2. Use .map() para criar uma nova série do mesmo tamanho do df,
+#    onde cada valor é a contagem do seu respectivo source_id.
+#    Depois, compare com 2 para criar o filtro correto.
+rep = df[df['source_id'].map(counts) == 2].dropna()
+rep
+```
+
+### Exclui valores de RUWE <= 1.4
+```{python}
+import pandas as pd
+
+# Carregar os dados que você acabou de baixar
+df_membros = pd.read_csv('taurus_membros_dr3.csv')
+
+# Aplicar o filtro RUWE, como no artigo
+df_cleaned = df_membros[df_membros['ruwe'] <= 1.4].copy()
+print(f"Amostra original: {len(df_membros)} estrelas")
+print(f"Amostra limpa (RUWE <= 1.4): {len(df_cleaned)} estrelas")
+```
+
+### Plota dados 
+```{python}
+plt.figure()
+plt.plot(df_cleaned['ra'],df_cleaned['dec'], '.')
+plt.xlabel('ra (°)')
+plt.ylabel('dec (°)')
+plt.show()
+```
