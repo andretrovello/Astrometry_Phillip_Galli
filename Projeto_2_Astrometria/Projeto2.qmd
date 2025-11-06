@@ -1,0 +1,8 @@
+---
+title: "Projeto 2 Astrometria"
+author: "André Almeida Trovello"
+format: html
+---
+# Estudo de regiões de formação estelar (Taurus) com métodos de MAchine Learning
+
+
