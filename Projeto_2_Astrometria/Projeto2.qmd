@@ -150,19 +150,26 @@ full_table
 ```
 
 ```{python}
+import numpy as np
+
+# A maneira mais eficiente, correta e idiomática (Pythonic) de fazer isso:
+
 df_filtered = df.sort_values(
-    by=[
-        'source_id',              # Agrupamento/Manutenção de Unicidade
-        'angular_distance',       # 1º Critério: Mais importante (ordenação)
-        'magnitude_difference'    # 2º Critério: Desempate (ordenação)
-    ], 
-    ascending=True # Queremos o mínimo (menor) de cada critério
+    by='source_id',              # Critério de agrupamento (primeira ordenação)
+    ascending=True
+).sort_values(
+    # 1º Critério: Mínimo do valor absoluto da diferença angular
+    # Usamos o .abs() diretamente na coluna.
+    by=['angular_distance', 'magnitude_difference'], 
+    key=lambda x: np.abs(x),  # APLICA np.abs() (módulo) a AMBAS as colunas
+    ascending=True,
+    kind='stable' # Mantém a ordem da ordenação anterior ('source_id')
 ).drop_duplicates(
     subset=['source_id'], # Coluna que define o que é 'único'
     keep='first'          # Mantém a linha que ficou no topo após a ordenação
 )
 
-print(df_filtered)
+print(df_filtered.head())
 ```
 
 ### Exclui valores de RUWE <= 1.4
@@ -182,4 +189,49 @@ plt.gca().invert_xaxis()
 plt.xlabel('l (°)')
 plt.ylabel('b (°)')
 plt.show()
+```
+
+
+```{python}
+X = df_cleaned[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
+range_n_clusters = [2,3,4,5,6,7,8,9,10]
+avg_silhouettes = []
+
+for n_clusters in range_n_clusters:
+    # Initialize the clusterer with n_clusters value and a random generator
+    # seed of 10 for reproducibility.
+    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
+    cluster_labels = clusterer.fit_predict(X)
+
+    # The silhouette_score gives the average value for all the samples.
+    # This gives a perspective into the density and separation of the formed
+    # clusters
+    silhouette_avg = silhouette_score(X, cluster_labels)
+    print(
+        "For n_clusters =",
+        n_clusters,
+        "The average silhouette_score is :",
+        silhouette_avg,
+    )
+    avg_silhouettes.append(silhouette_avg)
+# Compute the silhouette scores for each sample
+sample_silhouette_values = silhouette_samples(X, cluster_labels)
+best_cluster = avg_silhouettes.index(max(avg_silhouettes))
+print(f"highest value = {max(avg_silhouettes)}, \
+    n_clusters = {range_n_clusters[best_cluster]}")
+
+clusterer = KMeans(n_clusters=best_cluster, random_state=10)
+cluster_labels = clusterer.fit_predict(X)
+
+fig, (ax1, ax2) = plt.subplots(2,1)
+fig.set_size_inches(18, 18)
+ax1.plot(range_n_clusters, avg_silhouettes, '-', marker='o')
+ax1.set_xlabel('k')
+ax1.set_ylabel('Average Silhouette Score')
+ax2.scatter(df_cleaned['l'], df_cleaned['b'], c=cluster_labels)
+plt.gca().invert_xaxis()
+ax2.set_xlabel('l (°)')
+ax2.set_ylabel('b (°)')
+plt.show()
+
 ```
