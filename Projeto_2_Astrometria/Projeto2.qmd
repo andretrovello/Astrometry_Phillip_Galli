@@ -14,7 +14,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 from astroquery.gaia import Gaia
-from sklearn.cluster import KMeans, DBSCAN
+from sklearn.cluster import KMeans, DBSCAN, HDBSCAN
 from sklearn.metrics import silhouette_score, silhouette_samples
 from astropy.table import Table
 ```
@@ -130,7 +130,7 @@ except Exception as e:
     print(e)
 ```
 
-# 2. Clustering
+# 2. Seleção da Amostra
 ### Carregando tabelas
 ```{python}
 data = pd.read_csv('taurus_membros_dr3.csv')
@@ -186,12 +186,13 @@ print(f"Amostra limpa (RUWE <= 1.4): {len(df_cleaned)} estrelas")
 plt.figure()
 plt.plot(df_cleaned['l'],df_cleaned['b'], '.')
 plt.gca().invert_xaxis()
-plt.xlabel('l (°)')
-plt.ylabel('b (°)')
+plt.xlabel('l (°)', fontsize=12)
+plt.ylabel('b (°)', fontsize=12)
 plt.show()
 ```
 
-
+# 3. Clustering
+### K-means
 ```{python}
 X = df_cleaned[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
 range_n_clusters = [2,3,4,5,6,7,8,9,10]
@@ -227,11 +228,238 @@ fig, (ax1, ax2) = plt.subplots(2,1)
 fig.set_size_inches(18, 18)
 ax1.plot(range_n_clusters, avg_silhouettes, '-', marker='o')
 ax1.set_xlabel('k')
-ax1.set_ylabel('Average Silhouette Score')
+ax1.set_ylabel('Average Silhouette Score', fontsize=12)
 ax2.scatter(df_cleaned['l'], df_cleaned['b'], c=cluster_labels)
 plt.gca().invert_xaxis()
-ax2.set_xlabel('l (°)')
-ax2.set_ylabel('b (°)')
+ax2.set_xlabel('l (°)', fontsize=12)
+ax2.set_ylabel('b (°)', fontsize=12)
 plt.show()
 
+```
+
+### DBSCAN
+```{python}
+X = df_cleaned[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
+db = DBSCAN(eps=0.5, min_samples=5).fit(X)
+labels = db.labels_
+
+n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+n_noise_ = list(labels).count(-1)
+
+print("Estimated number of clusters: %d" % n_clusters_)
+print("Estimated number of noise points: %d" % n_noise_)
+
+```
+
+
+```{python}
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import DBSCAN
+import numpy as np
+import matplotlib.pyplot as plt
+from sklearn.neighbors import NearestNeighbors
+
+# Assumindo que 'df_cleaned' é o seu DataFrame com o filtro RUWE já aplicado
+
+# 1. Selecionar os dados para o clustering
+features = ['ra', 'dec', 'parallax', 'pmra', 'pmdec']
+X = df_cleaned[features]
+
+# 2. Normalizar os dados (O PASSO MAIS IMPORTANTE)
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# 3. ESCOLHER OS PARÂMETROS PARA OS DADOS NORMALIZADOS
+# O eps=0.5 não faz mais sentido. Precisamos encontrar um novo valor.
+
+# --- Como escolher min_samples ---
+# Uma boa regra é usar min_samples >= 2 * n_dimensões
+# Para 5 dimensões, um bom começo é min_samples = 10 a 15.
+min_samples = 5
+
+# --- Como escolher eps (Método do "Joelho" ou K-distance) ---
+# Vamos plotar a distância de cada ponto para o seu 15º vizinho mais próximo
+# e procurar por um "joelho" (cotovelo) no gráfico.
+print("Calculando o gráfico k-distance para encontrar o melhor 'eps'...")
+neighbors = NearestNeighbors(n_neighbors=min_samples)
+neighbors_fit = neighbors.fit(X_scaled)
+distances, indices = neighbors_fit.kneighbors(X_scaled)
+
+# Pega a distância para o k-ésimo vizinho (k = min_samples) e ordena
+distances = np.sort(distances[:, min_samples-1], axis=0)
+
+# Plota o gráfico
+plt.figure(figsize=(10, 6))
+plt.plot(distances)
+plt.title('Gráfico K-distance para Escolha do Epsilon (eps)')
+plt.xlabel('Pontos (ordenados por distância)')
+plt.ylabel(f'Distância para o {min_samples}º Vizinho Mais Próximo')
+plt.grid(True)
+plt.show()
+
+# OLHE O GRÁFICO! Onde a curva começa a subir abruptamente?
+# Esse é o seu valor ideal para 'eps'. Digamos que seja 1.2, por exemplo.
+# Você precisará ajustar este valor com base no seu gráfico.
+eps_ideal = 1 # <-- AJUSTE ESTE VALOR COM BASE NO SEU GRÁFICO
+
+# 4. Rodar o DBSCAN com os dados normalizados e parâmetros corretos
+print(f"\nRodando DBSCAN com eps={eps_ideal} e min_samples={min_samples}")
+db = DBSCAN(eps=eps_ideal, min_samples=min_samples).fit(X_scaled)
+labels = db.labels_
+
+# 5. Analisar os resultados
+n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+n_noise_ = list(labels).count(-1)
+
+print(f"\nNúmero estimado de clusters: {n_clusters_}")
+print(f"Número estimado de pontos de ruído: {n_noise_}")
+
+# Adicionar os labels dos clusters de volta ao DataFrame para análise
+df_cleaned['cluster_dbscan'] = labels
+print("\nDistribuição de estrelas por cluster:")
+print(df_cleaned['cluster_dbscan'].value_counts())
+```
+
+
+```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
+# Assuma que 'df_cleaned' é o seu DataFrame final com os dados e os rótulos do DBSCAN
+# Ex: df_cleaned['cluster_dbscan'] contém os resultados do DBSCAN
+
+# Pega os rótulos e encontra quantos clusters únicos existem (sem contar o ruído)
+labels = df_cleaned['cluster_dbscan']
+unique_labels = set(labels)
+n_clusters = len(unique_labels) - (1 if -1 in labels else 0)
+
+# Cria uma paleta de cores para os clusters
+# Usamos cm.rainbow para gerar cores distintas
+colors = cm.rainbow(np.linspace(0, 1, len(unique_labels)))
+
+# Inicia a figura do gráfico
+fig, ax = plt.subplots(figsize=(12, 10))
+
+# Itera sobre cada cluster único e o plota com uma cor diferente
+for k, col in zip(unique_labels, colors):
+    # --- Estilo para os pontos de ruído (label = -1) ---
+    if k == -1:
+        # Ruído será plotado como pequenos 'x' pretos e semi-transparentes
+        col = [0, 0, 0, 0.3]  # RGBA: Preto com 30% de opacidade
+        marker = 'x'
+        size = 20
+        plot_label = f'Ruído ({list(labels).count(-1)} estrelas)'
+    # --- Estilo para os clusters reais (label >= 0) ---
+    else:
+        # Clusters serão plotados como círculos coloridos
+        marker = 'o'
+        size = 50
+        plot_label = f'{k+1}'
+
+    # Cria uma máscara para selecionar apenas as estrelas do cluster atual
+    class_member_mask = (labels == k)
+    
+    # Seleciona os dados do cluster atual
+    xy = df_cleaned[class_member_mask]
+    
+    # Plota os pontos no gráfico
+    ax.scatter(xy['l'], xy['b'], s=size, c=[col], marker=marker, label=plot_label, edgecolor='black', linewidths=0.5)
+
+# --- Finalização e customização do gráfico ---
+ax.set_title(f'DBSCAN Região de Taurus ({n_clusters} clusters)', fontsize=14)
+ax.set_xlabel('l(°)', fontsize=12)
+ax.set_ylabel('b(°)', fontsize=12)
+
+# Inverte o eixo X, como é comum em mapas celestes
+ax.invert_xaxis() 
+
+#ax.legend(loc='upper right')
+ax.grid(True, linestyle='--', alpha=0.6)
+plt.show()
+```
+
+### HDBSCAN
+
+```{python}
+features = ['ra', 'dec', 'parallax', 'pmra', 'pmdec']
+X = df_cleaned[features]
+
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# 2. Implementar o HDBSCAN do Scikit-learn
+print("Rodando HDBSCAN (do Scikit-learn)...")
+clusterer = HDBSCAN(
+    min_cluster_size=15,  # <-- O seu parâmetro principal
+    min_samples=10        # <-- Parâmetro de ajuste fino (opcional)
+)
+
+clusterer.fit(X_scaled)
+
+# 3. Analisar os resultados (Igual)
+labels = clusterer.labels_
+
+n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
+n_noise_ = list(labels).count(-1)
+
+print(f"\nNúmero estimado de clusters: {n_clusters_}")
+print(f"Número estimado de pontos de ruído: {n_noise_}")
+
+# Adicionar os labels dos clusters de volta ao DataFrame
+df_cleaned['cluster_hdbscan'] = labels
+print("\nDistribuição de estrelas por cluster:")
+print(df_cleaned['cluster_hdbscan'].value_counts())
+```
+
+
+```{python}
+# Assuma que 'df_cleaned' é o seu DataFrame com a coluna 'cluster_hdbscan'
+
+# Pega os rótulos e encontra quantos clusters únicos existem (sem contar o ruído)
+labels = df_cleaned['cluster_hdbscan']
+unique_labels = set(labels)
+n_clusters = len(unique_labels) - (1 if -1 in labels else 0)
+
+# Cria uma paleta de cores para os clusters
+colors = cm.rainbow(np.linspace(0, 1, len(unique_labels)))
+
+# Inicia a figura do gráfico
+fig, ax = plt.subplots(figsize=(12, 10))
+
+# Itera sobre cada cluster único e o plota com uma cor diferente
+for k, col in zip(unique_labels, colors):
+    # --- Estilo para os pontos de ruído (label = -1) ---
+    if k == -1:
+        col = [0, 0, 0, 0.3]  # RGBA: Preto com 30% de opacidade
+        marker = 'x'
+        size = 20
+        plot_label = f'Ruído ({list(labels).count(-1)} estrelas)'
+    # --- Estilo para os clusters reais (label >= 0) ---
+    else:
+        marker = 'o'
+        size = 50
+        plot_label = f'Cluster {k}'
+
+    # Cria uma máscara para selecionar apenas as estrelas do cluster atual
+    class_member_mask = (labels == k)
+    
+    # Seleciona os dados do cluster atual
+    xy = df_cleaned[class_member_mask]
+    
+    # Plota os pontos no gráfico
+    ax.scatter(xy['l'], xy['b'], s=size, c=[col], marker=marker, label=plot_label, edgecolor='black', linewidths=0.5)
+
+# --- Finalização e customização do gráfico ---
+ax.set_title(f'HDBSCAN Região de Taurus ({n_clusters} clusters)', fontsize=14)
+ax.set_xlabel('l(°)', fontsize=12)
+ax.set_ylabel('b(°)', fontsize=12)
+# Inverte o eixo X, como é comum em mapas celestes
+ax.invert_xaxis() 
+
+#ax.legend(loc='upper right')
+ax.grid(True, linestyle='--', alpha=0.6)
+plt.show()
 ```
