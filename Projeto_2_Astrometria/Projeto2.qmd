@@ -194,49 +194,6 @@ plt.show()
 
 # 3. Clustering
 ### K-means
-```{python}
-X = df_cleaned[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
-range_n_clusters = [2,3,4,5,6,7,8,9,10]
-avg_silhouettes = []
-
-for n_clusters in range_n_clusters:
-    # Initialize the clusterer with n_clusters value and a random generator
-    # seed of 10 for reproducibility.
-    clusterer = KMeans(n_clusters=n_clusters, random_state=10)
-    cluster_labels = clusterer.fit_predict(X)
-
-    # The silhouette_score gives the average value for all the samples.
-    # This gives a perspective into the density and separation of the formed
-    # clusters
-    silhouette_avg = silhouette_score(X, cluster_labels)
-    print(
-        "For n_clusters =",
-        n_clusters,
-        "The average silhouette_score is :",
-        silhouette_avg,
-    )
-    avg_silhouettes.append(silhouette_avg)
-# Compute the silhouette scores for each sample
-sample_silhouette_values = silhouette_samples(X, cluster_labels)
-best_cluster = avg_silhouettes.index(max(avg_silhouettes))
-print(f"highest value = {max(avg_silhouettes)}, \
-    n_clusters = {range_n_clusters[best_cluster]}")
-
-clusterer = KMeans(n_clusters=best_cluster, random_state=10)
-cluster_labels = clusterer.fit_predict(X)
-
-fig, (ax1, ax2) = plt.subplots(2,1)
-fig.set_size_inches(18, 18)
-ax1.plot(range_n_clusters, avg_silhouettes, '-', marker='o')
-ax1.set_xlabel('k')
-ax1.set_ylabel('Average Silhouette Score', fontsize=12)
-ax2.scatter(df_cleaned['l'], df_cleaned['b'], c=cluster_labels)
-plt.gca().invert_xaxis()
-ax2.set_xlabel('l (°)', fontsize=12)
-ax2.set_ylabel('b (°)', fontsize=12)
-plt.show()
-
-```
 
 ```{python}
 import pandas as pd
@@ -307,40 +264,33 @@ df_cleaned['cluster_kmeans'] = cluster_labels
 # --- 3. PLOTAGEM ---
 # (Seu código de plotagem está correto)
 
-fig, (ax1, ax2) = plt.subplots(2, 1)
-fig.set_size_inches(18, 18)
+plt.figure(figsize=(10, 6)) # Define um tamanho de figura mais padrão
+plt.plot(range_n_clusters, avg_silhouettes, '-', marker='o')
+plt.xlabel('k (Número de Clusters)', fontsize=12)
+plt.ylabel('Average Silhouette Score', fontsize=12)
+plt.title('Método da Silhueta (com dados Normalizados)')
+plt.grid(True, linestyle='--', alpha=0.7)
+plt.show()
 
-# Gráfico da Silhueta
-ax1.plot(range_n_clusters, avg_silhouettes, '-', marker='o')
-ax1.set_xlabel('k')
-ax1.set_ylabel('Average Silhouette Score', fontsize=12)
-ax1.set_title('Método da Silhueta (com dados Normalizados)')
 
-# Gráfico de Clusters
-# Plota as posições (l, b) coloridas pelos novos labels
-ax2.scatter(df_cleaned['l'], df_cleaned['b'], c=cluster_labels) 
-plt.gca().invert_xaxis()
-ax2.set_xlabel('l (°)', fontsize=12)
-ax2.set_ylabel('b (°)', fontsize=12)
-ax2.set_title(f'Clusters K-Means (k={best_n_clusters})')
+# --- Gráfico 2: Mapa de Clusters ---
+fig, ax = plt.subplots(figsize=(10, 8)) # Cria uma figura e um eixo
 
+# Plota os dados no eixo (ax)
+ax.scatter(df_cleaned['l'], df_cleaned['b'], c=cluster_labels) 
+
+# Inverte o eixo x (aplicado ao 'ax' correto)
+ax.invert_xaxis() 
+
+# Configura os rótulos e título
+ax.set_xlabel('l (°)', fontsize=12)
+ax.set_ylabel('b (°)', fontsize=12)
+ax.set_title(f'Clusters K-Means (k={best_n_clusters})')
+ax.grid(True, linestyle='--', alpha=0.6)
 plt.show()
 ```
 
 ### DBSCAN
-```{python}
-X = df_cleaned[['ra', 'dec', 'parallax', 'pmra', 'pmdec']]
-db = DBSCAN(eps=0.5, min_samples=5).fit(X)
-labels = db.labels_
-
-n_clusters_ = len(set(labels)) - (1 if -1 in labels else 0)
-n_noise_ = list(labels).count(-1)
-
-print("Estimated number of clusters: %d" % n_clusters_)
-print("Estimated number of noise points: %d" % n_noise_)
-
-```
-
 
 ```{python}
 import pandas as pd
@@ -555,65 +505,6 @@ plt.show()
 ```
 
 ### CMDs
-```{python}
-import matplotlib.pyplot as plt
-import pandas as pd
-
-# Separa os dados de ruído (fundo) e os dados dos clusters
-labels = df_cleaned['cluster_hdbscan']
-noise_data = df_cleaned[labels == -1]
-
-# Pega os IDs dos clusters reais (ignora o -1)
-cluster_ids = sorted([c for c in labels.unique() if c >= 0])
-
-print(f"Gerando CMDs individuais para {len(cluster_ids)} clusters...")
-
-# Itera sobre cada cluster e cria um gráfico para ele
-for cluster_id in cluster_ids:
-    
-    # Seleciona os dados apenas para este cluster
-    cluster_data = df_cleaned[labels == cluster_id]
-    
-    plt.figure(figsize=(8, 10))
-    
-    # 1. Plota o "campo" de ruído em cinza transparente
-    plt.scatter(
-        noise_data['bp_rp'], 
-        noise_data['phot_g_mean_mag'], 
-        c='gray', 
-        s=1, 
-        alpha=0.1,  # Transparente
-        label='Ruído (Campo)'
-    )
-    
-    # 2. Plota os membros do cluster por cima, em laranja
-    plt.scatter(
-        cluster_data['bp_rp'], 
-        cluster_data['phot_g_mean_mag'], 
-        c='orange', 
-        s=15, 
-        label=f'Cluster {cluster_id} ({len(cluster_data)} estrelas)',
-        edgecolor='black',
-        linewidth=0.5
-    )
-    
-    # --- Customização ---
-    plt.title(f'Diagrama Cor-Magnitude (CMD) - Cluster {cluster_id}', fontsize=16)
-    plt.xlabel('Cor ($G_{BP} - G_{RP}$)', fontsize=12)
-    plt.ylabel('Magnitude G', fontsize=12)
-    
-    # Inverte o eixo Y (fundamental para CMDs)
-    plt.gca().invert_yaxis()
-    
-    # Define limites (opcional, mas ajuda a comparar)
-    # plt.xlim(-1, 5)
-    # plt.ylim(20, 5)
-    
-    plt.legend()
-    plt.grid(True, linestyle='--', alpha=0.5)
-    plt.show()
-```
-
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -689,7 +580,7 @@ for i, ax in enumerate(axs):
         ax.axis('off')
 
 # Título geral da figura (opcional)
-fig.suptitle(f'Análise de Clusters HDBSCAN - Total: {n_clusters}', fontsize=20, y=1.02)
+fig.suptitle(f'Análise de Clusters HDBSCAN - Total: {n_clusters}', fontsize=20, y=1.06)
 
 plt.show()
 ```
@@ -761,7 +652,7 @@ for i, ax in enumerate(axs):
         # Desliga eixos extras
         ax.axis('off')
 
-fig.suptitle(f'Análise de CMDs - DBSCAN (Total: {n_clusters} clusters)', fontsize=20, y=1.02)
+fig.suptitle(f'Análise de CMDs - DBSCAN (Total: {n_clusters} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -795,9 +686,9 @@ n_clusters = len(cluster_ids)
 print(f"Gerando mosaico de CMDs para {n_clusters} clusters do K-Means...")
 
 # --- Configuração do Grid (Mosaico) ---
-n_cols = 3
+n_cols = 5
 n_rows = math.ceil(n_clusters / n_cols)
-fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 5 * n_rows), constrained_layout=True)
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 3 * n_rows), constrained_layout=True)
 axs = axs.flatten()
 
 # --- Loop de Plotagem ---
@@ -845,7 +736,7 @@ for i, ax in enumerate(axs):
         # Desliga eixos extras
         ax.axis('off')
 
-fig.suptitle(f'Análise de CMDs - K-Means (Total: {n_clusters} clusters)', fontsize=20, y=1.02)
+fig.suptitle(f'Análise de CMDs - K-Means (Total: {n_clusters} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -867,9 +758,9 @@ n_clusters = len(cluster_ids)
 print(f"Gerando mosaico de Movimento Próprio para {n_clusters} clusters do K-Means...")
 
 # --- 2. CONFIGURAÇÃO DO GRID ---
-n_cols = 3
+n_cols = 5
 n_rows = math.ceil(n_clusters / n_cols)
-fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 5 * n_rows), constrained_layout=True)
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 3 * n_rows), constrained_layout=True)
 axs = axs.flatten()
 
 # --- 3. LOOP DE PLOTAGEM ---
@@ -916,12 +807,11 @@ for i, ax in enumerate(axs):
         # Desliga eixos extras
         ax.axis('off')
 
-fig.suptitle(f'Análise de Movimento Próprio - K-Means (Total: {n_clusters} clusters)', fontsize=20, y=1.02)
+fig.suptitle(f'Análise de Movimento Próprio - K-Means (Total: {n_clusters} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
 ### 2. DBSCAN
-
 
 ```{python}
 import matplotlib.pyplot as plt
@@ -988,7 +878,7 @@ for i, ax in enumerate(axs):
         # Desliga eixos extras
         ax.axis('off')
 
-fig.suptitle(f'Análise de Movimento Próprio - DBSCAN (Total: {n_clusters} clusters)', fontsize=20, y=1.02)
+fig.suptitle(f'Análise de Movimento Próprio - DBSCAN (Total: {n_clusters} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -1060,7 +950,7 @@ for i, ax in enumerate(axs):
         # Desliga eixos extras
         ax.axis('off')
 
-fig.suptitle(f'Análise de Movimento Próprio - HDBSCAN (Total: {n_clusters} clusters)', fontsize=20, y=1.02)
+fig.suptitle(f'Análise de Movimento Próprio - HDBSCAN (Total: {n_clusters} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -1084,9 +974,9 @@ n_clusters = len(cluster_ids)
 print(f"Gerando mosaico de histogramas de paralaxe para {n_clusters} clusters do K-Means...")
 
 # --- 2. CONFIGURAÇÃO DO GRID ---
-n_cols = 3
+n_cols = 4
 n_rows = math.ceil(n_clusters / n_cols)
-fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 4 * n_rows), constrained_layout=True)
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 3 * n_rows), constrained_layout=True)
 axs = axs.flatten()
 
 # --- 3. LOOP DE PLOTAGEM ---
@@ -1106,7 +996,7 @@ for i, ax in enumerate(axs):
     else:
         ax.axis('off')
 
-fig.suptitle(f'Histogramas de Paralaxe - K-Means (Total: {n_clusters} clusters)', fontsize=20, y=1.03)
+fig.suptitle(f'Histogramas de Paralaxe - K-Means (Total: {n_clusters} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -1128,7 +1018,7 @@ n_clusters = len(cluster_ids)
 print(f"Gerando mosaico de histogramas de paralaxe para DBSCAN...")
 
 # --- 2. CONFIGURAÇÃO DO GRID ---
-n_cols = 3
+n_cols = 4
 n_rows = math.ceil(n_clusters / n_cols)
 fig, axs = plt.subplots(n_rows, n_cols, figsize=(15, 4 * n_rows), constrained_layout=True)
 axs = axs.flatten()
@@ -1157,7 +1047,7 @@ for i, ax in enumerate(axs):
     else:
         ax.axis('off')
 
-fig.suptitle(f'Histogramas de Paralaxe - DBSCAN', fontsize=20, y=1.03)
+fig.suptitle(f'Histogramas de Paralaxe - DBSCAN', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -1208,6 +1098,6 @@ for i, ax in enumerate(axs):
     else:
         ax.axis('off')
 
-fig.suptitle(f'Histogramas de Paralaxe - HDBSCAN', fontsize=20, y=1.03)
+fig.suptitle(f'Histogramas de Paralaxe - HDBSCAN', fontsize=20, y=1.06)
 plt.show()
 ```
