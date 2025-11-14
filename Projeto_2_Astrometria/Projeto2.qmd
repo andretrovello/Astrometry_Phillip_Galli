@@ -197,14 +197,15 @@ plt.show()
 
 ```{python}
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
-from sklearn.cluster import KMeans
-from sklearn.metrics import silhouette_score, silhouette_samples
 import numpy as np
 import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import silhouette_score, silhouette_samples
 
 # --- 1. PREPARAÇÃO DOS DADOS ---
-# (Isto é o que você fez na sua seção DBSCAN)
+# (Assumindo que 'df_cleaned' existe da célula anterior)
 
 features = ['ra', 'dec', 'parallax', 'pmra', 'pmdec']
 X = df_cleaned[features]
@@ -215,29 +216,19 @@ X_scaled = scaler.fit_transform(X)
 
 print("Iniciando análise K-Means com dados NORMALIZADOS...")
 
-# --- 2. ANÁLISE K-MEANS ---
-# (Este é o seu código, mas usando X_scaled)
+# --- 2. ANÁLISE K-MEANS (A parte que faltava) ---
 
 range_n_clusters = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 avg_silhouettes = []
 
 for n_clusters in range_n_clusters:
-    # Initialize the clusterer with n_clusters value and a random generator
-    # seed of 10 for reproducibility.
-    # Adicionado n_init=10 para garantir consistência
     clusterer = KMeans(n_clusters=n_clusters, random_state=10, n_init=10) 
     
-    # --- CORREÇÃO AQUI ---
-    # Use os dados normalizados (X_scaled)
-    cluster_labels = clusterer.fit_predict(X_scaled) 
+    # Usa os dados normalizados (X_scaled)
+    cluster_labels_loop = clusterer.fit_predict(X_scaled) 
 
-    # The silhouette_score gives the average value for all the samples.
-    # This gives a perspective into the density and separation of the formed
-    # clusters
-    
-    # --- CORREÇÃO AQUI ---
-    # Use os dados normalizados (X_scaled)
-    silhouette_avg = silhouette_score(X_scaled, cluster_labels) 
+    # Usa os dados normalizados (X_scaled)
+    silhouette_avg = silhouette_score(X_scaled, cluster_labels_loop) 
     print(
         "For n_clusters =",
         n_clusters,
@@ -255,15 +246,14 @@ print(f"highest value = {best_silhouette_score}, n_clusters = {best_n_clusters}"
 
 # Roda o K-Means final com o melhor n_clusters
 clusterer = KMeans(n_clusters=best_n_clusters, random_state=10, n_init=10)
-# --- CORREÇÃO AQUI ---
-cluster_labels = clusterer.fit_predict(X_scaled) 
+cluster_labels = clusterer.fit_predict(X_scaled) # Esta é a variável que o plot usa
 
-# Adiciona os rótulos ao DataFrame para os plots de CMD
+# Adiciona os rótulos ao DataFrame (bom para outras análises)
 df_cleaned['cluster_kmeans'] = cluster_labels 
 
-# --- 3. PLOTAGEM ---
-# (Seu código de plotagem está correto)
+# --- 3. PLOTAGEM (Dividida em duas figuras) ---
 
+# --- Gráfico 1: Pontuação de Silhueta ---
 plt.figure(figsize=(10, 6)) # Define um tamanho de figura mais padrão
 plt.plot(range_n_clusters, avg_silhouettes, '-', marker='o')
 plt.xlabel('k (Número de Clusters)', fontsize=12)
@@ -273,11 +263,33 @@ plt.grid(True, linestyle='--', alpha=0.7)
 plt.show()
 
 
-# --- Gráfico 2: Mapa de Clusters ---
-fig, ax = plt.subplots(figsize=(10, 8)) # Cria uma figura e um eixo
+# --- Gráfico 2: Mapa de Clusters (COM LEGENDA) ---
+fig, ax = plt.subplots(figsize=(12, 10)) # Aumentei um pouco para caber a legenda
 
-# Plota os dados no eixo (ax)
-ax.scatter(df_cleaned['l'], df_cleaned['b'], c=cluster_labels) 
+# Encontrar os labels únicos
+unique_labels = np.unique(cluster_labels)
+n_clusters = len(unique_labels)
+
+# Criar uma paleta de cores
+colors = cm.rainbow(np.linspace(0, 1, n_clusters))
+
+# Iterar sobre cada cluster e plotá-lo separadamente
+for k, col in zip(unique_labels, colors):
+    
+    # Criar uma máscara para selecionar apenas as estrelas deste cluster
+    mask = (cluster_labels == k)
+    cluster_data = df_cleaned[mask]
+    
+    # Plotar este cluster com uma cor e um 'label'
+    ax.scatter(
+        cluster_data['l'], 
+        cluster_data['b'], 
+        c=[col], # A cor para este cluster
+        s=50,    # Tamanho do ponto
+        label=f'Cluster {k}', # O texto que aparecerá na legenda
+        edgecolor='black', 
+        linewidths=0.5
+    )
 
 # Inverte o eixo x (aplicado ao 'ax' correto)
 ax.invert_xaxis() 
@@ -285,8 +297,12 @@ ax.invert_xaxis()
 # Configura os rótulos e título
 ax.set_xlabel('l (°)', fontsize=12)
 ax.set_ylabel('b (°)', fontsize=12)
-ax.set_title(f'Clusters K-Means (k={best_n_clusters})')
+ax.set_title(f'Clusters K-Means ({best_n_clusters} clusters)')
 ax.grid(True, linestyle='--', alpha=0.6)
+
+# --- COMANDO PARA ADICIONAR A LEGENDA ---
+ax.legend(loc='best', title="Clusters") # 'loc='best'' encontra o melhor lugar
+
 plt.show()
 ```
 
@@ -316,7 +332,7 @@ X_scaled = scaler.fit_transform(X)
 # --- Como escolher min_samples ---
 # Uma boa regra é usar min_samples >= 2 * n_dimensões
 # Para 5 dimensões, um bom começo é min_samples = 10 a 15.
-min_samples = 5
+min_samples = 10
 
 # --- Como escolher eps (Método do "Joelho" ou K-distance) ---
 # Vamos plotar a distância de cada ponto para o seu 15º vizinho mais próximo
@@ -397,7 +413,8 @@ for k, col in zip(unique_labels, colors):
         # Clusters serão plotados como círculos coloridos
         marker = 'o'
         size = 50
-        plot_label = f'{k+1}'
+        # --- CORREÇÃO DE LABEL ---
+        plot_label = f'Cluster {k}' # Mais claro que k+1
 
     # Cria uma máscara para selecionar apenas as estrelas do cluster atual
     class_member_mask = (labels == k)
@@ -409,14 +426,17 @@ for k, col in zip(unique_labels, colors):
     ax.scatter(xy['l'], xy['b'], s=size, c=[col], marker=marker, label=plot_label, edgecolor='black', linewidths=0.5)
 
 # --- Finalização e customização do gráfico ---
-ax.set_title(f'DBSCAN Região de Taurus ({n_clusters} clusters)', fontsize=14)
+# --- CORREÇÃO NO TÍTULO ---
+ax.set_title(f'DBSCAN Região de Taurus ({n_clusters-1} clusters)', fontsize=14) # Removido o '-1'
 ax.set_xlabel('l(°)', fontsize=12)
 ax.set_ylabel('b(°)', fontsize=12)
 
 # Inverte o eixo X, como é comum em mapas celestes
 ax.invert_xaxis() 
 
-#ax.legend(loc='upper right')
+# --- LINHA DESCOMENTADA ---
+ax.legend(loc='best', title="Clusters") # 'loc='best'' encontra o melhor lugar
+
 ax.grid(True, linestyle='--', alpha=0.6)
 plt.show()
 ```
@@ -433,7 +453,7 @@ X_scaled = scaler.fit_transform(X)
 # 2. Implementar o HDBSCAN do Scikit-learn
 print("Rodando HDBSCAN (do Scikit-learn)...")
 clusterer = HDBSCAN(
-    min_cluster_size=15,  # <-- O seu parâmetro principal
+    min_cluster_size=10,  # <-- O seu parâmetro principal
     min_samples=10        # <-- Parâmetro de ajuste fino (opcional)
 )
 
@@ -456,6 +476,11 @@ print(df_cleaned['cluster_hdbscan'].value_counts())
 
 
 ```{python}
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.cm as cm
+
 # Assuma que 'df_cleaned' é o seu DataFrame com a coluna 'cluster_hdbscan'
 
 # Pega os rótulos e encontra quantos clusters únicos existem (sem contar o ruído)
@@ -493,13 +518,16 @@ for k, col in zip(unique_labels, colors):
     ax.scatter(xy['l'], xy['b'], s=size, c=[col], marker=marker, label=plot_label, edgecolor='black', linewidths=0.5)
 
 # --- Finalização e customização do gráfico ---
-ax.set_title(f'HDBSCAN Região de Taurus ({n_clusters} clusters)', fontsize=14)
+# --- CORREÇÃO NO TÍTULO ---
+ax.set_title(f'HDBSCAN Região de Taurus ({n_clusters-1} clusters)', fontsize=14)
 ax.set_xlabel('l(°)', fontsize=12)
 ax.set_ylabel('b(°)', fontsize=12)
 # Inverte o eixo X, como é comum em mapas celestes
 ax.invert_xaxis() 
 
-#ax.legend(loc='upper right')
+# --- LINHA DESCOMENTADA ---
+ax.legend(loc='best', title="Clusters") # 'loc='best'' encontra o melhor lugar
+
 ax.grid(True, linestyle='--', alpha=0.6)
 plt.show()
 ```
@@ -1047,7 +1075,7 @@ for i, ax in enumerate(axs):
     else:
         ax.axis('off')
 
-fig.suptitle(f'Histogramas de Paralaxe - DBSCAN', fontsize=20, y=1.06)
+fig.suptitle(f'Histogramas de Paralaxe - DBSCAN (Total: {n_clusters-1} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
 
@@ -1098,6 +1126,6 @@ for i, ax in enumerate(axs):
     else:
         ax.axis('off')
 
-fig.suptitle(f'Histogramas de Paralaxe - HDBSCAN', fontsize=20, y=1.06)
+fig.suptitle(f'Histogramas de Paralaxe - HDBSCAN (Total: {n_clusters-1} clusters)', fontsize=20, y=1.06)
 plt.show()
 ```
